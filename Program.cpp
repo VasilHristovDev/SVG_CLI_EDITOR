@@ -1,5 +1,10 @@
-//
-// Created by vorte on 28.5.2022 г..
-//
-
 #include "Program.h"
+
+void Program::run() {
+    String command;
+    std::cin>>command;
+    String path = stripCommand(command).getText();
+    CLI_Handler console(stringToCommand(command), path.getText());
+    console.action();
+
+}

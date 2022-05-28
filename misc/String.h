@@ -35,7 +35,7 @@ public:
 
     ///Operator for string concatenation
     String operator+(const String &other);
-
+    String strip(const String & other);
     ///Operator for comparison between two strings
     bool operator == (const String & other);
 
@@ -44,7 +44,7 @@ public:
 
     ///Operators for input and output
     friend std::istream & operator >> (std::istream & in, String & readable);
-    friend std::ostream & operator << (std::ostream & out, String & readable);
+    friend std::ostream & operator << (std::ostream & out,const String & readable);
 
     ///Destructor
     ~String();

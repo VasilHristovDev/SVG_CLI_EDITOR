@@ -55,7 +55,7 @@ std::istream &operator>>(std::istream &in, String &readable) {
     return in;
 }
 //output operator
-std::ostream &operator<<(std::ostream &out, String &readable) {
+std::ostream &operator<<(std::ostream &out, const String &readable) {
     out<<readable.getText();
     return out;
 }
@@ -105,4 +105,21 @@ bool String::operator==(const String &other) {
             counter++;
     }
     return counter == this->size;
+}
+
+String  String::strip(const String &other) {
+    if(this->size < other.size)
+        return *this;
+
+    if(this->contains(other))
+    {
+        int occupiedChar = 0;
+        char * helperStr = new char [this->size - other.size + 3];
+        for (int i = other.size + 2; i < this->size -1 ; ++i) {
+            helperStr[occupiedChar++] = this->text[i];
+        }
+        helperStr[occupiedChar] = '\0';
+        return (String)helperStr;
+    }
+    return *this;
 }
