@@ -35,8 +35,7 @@ void CLI_Handler::action() {
                 if(svgFile.isCorrectFormat())
                 {
                     std::cout<<"BACHKAM"<<std::endl;
-//                    SvgAdapter adapter = new SvgAdapter();
-//                    SvgContainer = adapter.readFromFile(svgFile);
+//                    SvgContainer container = readFromFile(svgFile);
                 }
                 else
                 {
@@ -49,15 +48,20 @@ void CLI_Handler::action() {
             }
             break;
         case SAVE:
+            //TODO: Implement save
             break;
         case SAVE_AS:
+            //TODO: Implement save as
             break;
         case CLOSE:
+            //TODO: Implement closing file
             break;
         case HELP:
+            //TODO: Write all commands string
             std::cout << CliHelperMessages::FILE_OPENED_MESSAGE << std::endl;
             break;
         case EXIT:
+            //TODO: Implement exit
             std::cout<<"exit"<<std::endl;
             break;
         case RENDER:
