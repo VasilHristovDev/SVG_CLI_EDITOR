@@ -61,10 +61,11 @@ std::ostream &operator<<(std::ostream &out, const String &readable) {
 }
 //copy constructor
 String::String(const String &string) {
-    this->setText(string.getText());
+    this->text = new char[string.getSize()];
+    strcpy(this->text,string.getText());
 }
 //procedural way to check if a string is contained inside another string
-bool String::contains(const String &other) {
+bool String::contains(const String &other) const{
     unsigned int otherSize  = other.getSize();
     if(otherSize > this->size)
         return false;

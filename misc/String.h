@@ -24,7 +24,7 @@ public:
     void setText(const char * text);
 
     ///A boolean method that checks whether a given string is contained inside a string
-    bool contains(const String & other);
+    bool contains(const String & other) const;
 
     ///Getters
     unsigned int getSize() const;

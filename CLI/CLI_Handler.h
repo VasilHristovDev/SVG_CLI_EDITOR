@@ -5,7 +5,8 @@
 #include <windows.h>
 
 #include "CliHelperMessages.h"
-#include "File.cpp"
+#include "../Files/File.cpp"
+#include "../Files/SvgFile.cpp"
 
 enum COMMANDS {
     OPEN, CLOSE, SAVE, SAVE_AS, HELP, EXIT, RENDER, UNKNOWN_COMMAND
@@ -30,10 +31,18 @@ void CLI_Handler::action() {
         case OPEN:
             if(File::exists(this->path.getText()))
             {
-                File svgFile(this->path.getText());
-                //TODO: Implement Logic
-                SvgAdapter adapter = new SvgAdapter();
-                SvgContainer = adapter.readFromFile(svgFile);
+                SvgFile svgFile(this->path.getText());
+                if(svgFile.isCorrectFormat())
+                {
+                    std::cout<<"BACHKAM"<<std::endl;
+//                    SvgAdapter adapter = new SvgAdapter();
+//                    SvgContainer = adapter.readFromFile(svgFile);
+                }
+                else
+                {
+                    std::cout<<"Ne bachkam :("<<std::endl;
+                }
+
             }
             else {
                 std::cout<<"The specified path does not exist or it is not a file!"<<std::endl;
@@ -49,8 +58,10 @@ void CLI_Handler::action() {
             std::cout << CliHelperMessages::FILE_OPENED_MESSAGE << std::endl;
             break;
         case EXIT:
+            std::cout<<"exit"<<std::endl;
             break;
         case RENDER:
+            ShellExecute(NULL, "open", this->path.getText(), NULL, NULL, SW_SHOWNORMAL);
             break;
         default:
             break;
@@ -70,20 +81,20 @@ CLI_Handler::CLI_Handler(COMMANDS command, const char * path) {
 COMMANDS stringToCommand(String &string) {
     if (string.contains(CliHelperMessages::OPEN))
         return OPEN;
-    else if (string.getText() == CliHelperMessages::CLOSE)
+    if (string.contains(CliHelperMessages::CLOSE))
         return CLOSE;
-    else if (string.getText() == CliHelperMessages::RENDER)
+    if (string.contains(CliHelperMessages::RENDER))
         return RENDER;
-    else if (string.getText() == CliHelperMessages::SAVE)
+    if (string.contains(CliHelperMessages::SAVE))
         return SAVE;
-    else if (string.getText() == CliHelperMessages::SAVE_AS)
+    if (string.contains(CliHelperMessages::SAVE_AS))
         return SAVE_AS;
-    else if (string.getText() == CliHelperMessages::EXIT)
+    if (string.contains(CliHelperMessages::EXIT))
         return EXIT;
-    else if (string.getText() == CliHelperMessages::HELP)
+    if (string.contains(CliHelperMessages::HELP))
         return HELP;
-    else
-        return UNKNOWN_COMMAND;
+
+    return UNKNOWN_COMMAND;
 }
 String stripCommand(String & command)
 {
@@ -95,7 +106,11 @@ String stripCommand(String & command)
     {
         return command.strip(CliHelperMessages::SAVE_AS);
     }
-    return command;
+    else if(command.contains(CliHelperMessages::RENDER))
+    {
+        return command.strip(CliHelperMessages::RENDER);
+    }
+    return command.getText();
 }
 
 

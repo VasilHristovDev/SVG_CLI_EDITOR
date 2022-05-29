@@ -1,6 +1,6 @@
 #ifndef SVG_CLI_EDITOR_PROGRAM_H
 #define SVG_CLI_EDITOR_PROGRAM_H
-#include "misc/CLI_Handler.h"
+#include "CLI/CLI_Handler.h"
 
 class Program {
 public:

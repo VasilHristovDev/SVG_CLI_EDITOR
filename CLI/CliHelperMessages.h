@@ -1,6 +1,6 @@
 #ifndef SVG_CLI_EDITOR_HELPER_MESSAGES_H
 #define SVG_CLI_EDITOR_HELPER_MESSAGES_H
-#include "String.cpp"
+#include "../misc/String.cpp"
 
 class CliHelperMessages {
 public:
