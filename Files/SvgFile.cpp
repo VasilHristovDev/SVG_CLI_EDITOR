@@ -97,6 +97,7 @@ bool SvgFile::hasCorrectExtension() const {
         std::cerr<<FileHelperMessages::UNSUPPORTED_FILE_FORMAT<<std::endl;
         return false;
     }
+    return true;
 }
 
 
