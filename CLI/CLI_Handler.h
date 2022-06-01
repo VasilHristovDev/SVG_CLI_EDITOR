@@ -7,6 +7,7 @@
 #include "CliHelperMessages.h"
 #include "../Files/File.cpp"
 #include "../Files/SvgFile.cpp"
+#include "../Shapes/SvgContainer.cpp"
 
 enum COMMANDS {
     OPEN, CLOSE, SAVE, SAVE_AS, HELP, EXIT, RENDER, UNKNOWN_COMMAND
@@ -22,7 +23,14 @@ public:
 
     CLI_Handler(COMMANDS command,  const char * path = "/");
 
+    //action based commands
     void action();
+    void handleOpen();
+    void handleClose();
+    void handleSave();
+    void handleSaveAs();
+    void handleHelp();
+    void handleRender();
 
     void setCommand(COMMANDS commands);
 
@@ -32,87 +40,29 @@ public:
 void CLI_Handler::action() {
     switch (this->command) {
         case OPEN:
-            if(this->path == "")
-            {
-                std::cerr<<"No path provided!"<<std::endl;
-                return;
-            }
-            if(File::exists(this->path.getText()))
-            {
-                SvgFile svgFile(this->path.getText());
-                if(svgFile.isCorrectFormat())
-                {
-                    this->isFileOpen = true;
-                    std::cout<<"BACHKAM"<<std::endl;
-//                    SvgContainer container = readFromFile(svgFile);
-                }
-                else
-                {
-                    std::cout<<"Ne bachkam :("<<std::endl;
-                }
-
-            }
-            else {
-                std::cout<<"The specified path does not exist or it is not a file!"<<std::endl;
-            }
+            this->handleOpen();
             break;
         case SAVE:
-            if(this->isFileOpen)
-            {
-
-            }
-            else{
-                std::cout<<"No file is currently open!"<<std::endl;
-            }
+            this->handleSave();
             break;
         case SAVE_AS:
-            if(this->isFileOpen)
-            {
-
-            }
-            else{
-                std::cout<<"No file is currently open!"<<std::endl;
-            }
+            this->handleSaveAs();
             break;
         case CLOSE:
-            if(this->isFileOpen)
-            {
-
-                this->isFileOpen = false;
-            }
-            else{
-                std::cout<<"No file is currently open!"<<std::endl;
-            }
+           this->handleClose();
             break;
         case HELP:
-            std::cout << CliHelperMessages::CLI_COMMANDS << std::endl;
+            this->handleHelp();
+            break;
+        case RENDER:
+            this->handleRender();
             break;
         case EXIT:
             std::cout<<"Goodbye :("<<std::endl;
             return;
-        case RENDER:
-            if(this->path == "")
-            {
-                std::cerr<<"No path provided!"<<std::endl;
-                return;
-            }
-            if(File::exists(this->path.getText()))
-            {
-                SvgFile file(this->path.getText());
-                if(file.isCorrectFormat())
-                {
-                    ShellExecute(NULL, "open", this->path.getText(), NULL, NULL, SW_SHOWNORMAL);
-                    return;
-                }
-                std::cerr<<CliHelperMessages::FILE_NOT_IN_CORRECT_FORMAT<<std::endl;
-            }
-            else
-            {
-                std::cerr<<CliHelperMessages::FILE_PATH_DOES_NOT_EXIST<<std::endl;
-            }
-
-            break;
+        case UNKNOWN_COMMAND:
         default:
+            std::cout<<CliHelperMessages::UNKNOWN_COMMAND_USED<<std::endl;
             break;
     }
 
@@ -136,6 +86,88 @@ void CLI_Handler::setCommand(COMMANDS command) {
 
 void CLI_Handler::setPath(String &string) {
     this->path = string;
+}
+
+void CLI_Handler::handleOpen() {
+    if(this->path == "")
+    {
+        std::cerr<<"No path provided!"<<std::endl;
+        return;
+    }
+    if(File::exists(this->path.getText()))
+    {
+        SvgFile svgFile(this->path.getText());
+        if(svgFile.isCorrectFormat())
+        {
+            this->isFileOpen = true;
+            std::cout<<"BACHKAM"<<std::endl;
+            SvgContainer container;
+            container.readSvgElementsFromFile(svgFile);
+        }
+        else
+        {
+            std::cout<<"Ne bachkam :("<<std::endl;
+        }
+
+    }
+    else {
+        std::cout<<"The specified path does not exist or it is not a file!"<<std::endl;
+    }
+}
+void CLI_Handler::handleRender() {
+    if(this->path == "")
+    {
+        std::cerr<<"No path provided!"<<std::endl;
+        return;
+    }
+    if(File::exists(this->path.getText()))
+    {
+        SvgFile file(this->path.getText());
+        if(file.isCorrectFormat())
+        {
+            ShellExecute(NULL, "open", this->path.getText(), NULL, NULL, SW_SHOWNORMAL);
+            return;
+        }
+        std::cerr<<CliHelperMessages::FILE_NOT_IN_CORRECT_FORMAT<<std::endl;
+    }
+    else
+    {
+        std::cerr<<CliHelperMessages::FILE_PATH_DOES_NOT_EXIST<<std::endl;
+    }
+}
+
+void CLI_Handler::handleClose() {
+    if(this->isFileOpen)
+    {
+
+        this->isFileOpen = false;
+    }
+    else{
+        std::cout<<"No file is currently open!"<<std::endl;
+    }
+}
+
+void CLI_Handler::handleSave() {
+    if(this->isFileOpen)
+    {
+
+    }
+    else{
+        std::cout<<"No file is currently open!"<<std::endl;
+    }
+}
+void CLI_Handler::handleSaveAs() {
+    if(this->isFileOpen)
+    {
+
+    }
+    else{
+        std::cout<<"No file is currently open!"<<std::endl;
+    }
+}
+
+void CLI_Handler::handleHelp() {
+    std::cout << CliHelperMessages::CLI_COMMANDS << std::endl;
 }
 
 COMMANDS stringToCommand(String &string) {

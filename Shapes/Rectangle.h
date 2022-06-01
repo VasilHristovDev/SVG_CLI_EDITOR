@@ -13,9 +13,13 @@ private:
 public:
     Rectangle();
     Rectangle(int width, int height, int x, int y, const char * fill);
-    void read(const char * read);
-    void write(std::ostream & out);
-    void print(std::ostream & out);
+    void read(std::istream & in) override;
+    void write(std::ostream & out) override;
+    void print(std::ostream & out) override;
+
+    virtual Rectangle * copy() {
+        return new Rectangle(*this);
+    };
 };
 
 

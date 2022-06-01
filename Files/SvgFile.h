@@ -6,10 +6,10 @@
 class SvgFile: public File {
 public:
     SvgFile(const char * fileName): File(fileName){};
-    bool isCorrectFormat() const override;
+    bool isCorrectFormat() override;
     bool markupTagCorrect(String& line) const;
     bool markupTagCorrectSvgElement(String & line) const;
-    bool hasCorrectExtension() const override;
+    bool hasCorrectExtension() override;
 
 };
 

@@ -1,7 +1,7 @@
 #include "SvgFile.h"
 #include "FileHelperMessages.h"
 
-bool SvgFile::isCorrectFormat() const {
+bool SvgFile::isCorrectFormat()  {
    if(!this->hasCorrectExtension())
    {
        return false;
@@ -92,7 +92,7 @@ bool SvgFile::markupTagCorrectSvgElement(String &line) const {
     }
 }
 
-bool SvgFile::hasCorrectExtension() const {
+bool SvgFile::hasCorrectExtension()  {
     if(!fileName.contains(".svg")) {
         std::cerr<<FileHelperMessages::UNSUPPORTED_FILE_FORMAT<<std::endl;
         return false;

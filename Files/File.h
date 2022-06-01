@@ -10,10 +10,12 @@ protected:
 public:
     File(const char * fileName);
     static bool exists(const char * file);
-    virtual bool isCorrectFormat() const{
+
+    String getFileName();
+    virtual bool isCorrectFormat() {
         return true;
     };
-    virtual bool hasCorrectExtension() const {
+    virtual bool hasCorrectExtension() {
         return true;
     }
 };

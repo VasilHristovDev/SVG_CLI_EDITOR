@@ -9,3 +9,7 @@ File::File(const char *fileName) {
     this->fileName = fileName;
 }
 
+String File::getFileName()  {
+    return this->fileName;
+}
+

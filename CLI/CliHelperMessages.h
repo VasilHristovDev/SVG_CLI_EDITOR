@@ -22,6 +22,7 @@ public:
     static const char * HELP;
     static const char * RENDER;
     static const char * EXIT;
+    static const char * UNKNOWN_COMMAND_USED;
 
     //cli commands
     static const char * CLI_COMMANDS;
@@ -46,4 +47,5 @@ const char * CliHelperMessages::CLI_COMMANDS = "\nList of available commands for
                                                "render \"<path_to_svg_file>\"   renders the specified svg file to the browser\n"
                                                "help                          shows a list of operable commands\n"
                                                "exit                          exits the application\n";
+const char * CliHelperMessages::UNKNOWN_COMMAND_USED = "Unknown command was used!\nPlease write help to see a list of all supported commands!";
 #endif //SVG_CLI_EDITOR_HELPER_MESSAGES_H

@@ -35,4 +35,16 @@ void Rectangle::print(std::ostream &out) {
     out<<"y: "<<this->y<<" ";
     out<<"fill: "<<this->fill<<std::endl;
 }
-//TODO: Implement read method
+
+void Rectangle::read(std::istream &in) {
+    in.ignore(12);
+    in>>x;
+    in.ignore(5);
+    in>>y;
+    in.ignore(9);
+    in>>width;
+    in.ignore(10);
+    in>>height;
+    in.ignore(8);
+    in>>fill;
+}

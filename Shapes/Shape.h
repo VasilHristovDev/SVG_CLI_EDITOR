@@ -4,9 +4,11 @@
 
 class Shape {
 protected:
-    virtual void read(const char * line) = 0;
+    virtual void read(std::istream & in) = 0;
     virtual void write(std::ostream & out) = 0;
     virtual void print(std::ostream & out) = 0;
+public:
+    virtual Shape * copy() = 0;
 };
 
 

@@ -14,8 +14,6 @@ void Program::run() {
     }
 
 
-    console.action();
-
 
 
 }
