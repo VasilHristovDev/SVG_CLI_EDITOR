@@ -12,6 +12,9 @@ public:
     SvgElement(const char * name, Attribute * attributes, int attrCount);
 
     void read(const char * line);
+    String & getName();
+    Attribute * getAttributes();
+    int getAttrCount() const;
 };
 
 

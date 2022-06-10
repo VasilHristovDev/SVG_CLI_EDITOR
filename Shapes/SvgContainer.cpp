@@ -96,7 +96,7 @@ SvgContainer::SvgContainer(const SvgContainer &other) {
 
 void SvgContainer::readSvgElementsFromFile(SvgFile &file) {
     std::fstream reader(file.getFileName().getText(), std::ios::in);
-    class Rectangle temp;
+    class Rectangle tempRect;
     class Circle tempCircle;
     class Line tempLine;
     if(reader)
@@ -109,31 +109,44 @@ void SvgContainer::readSvgElementsFromFile(SvgFile &file) {
         while(!line.contains("</svg") || !reader.eof())
         {
             reader>>line;
-            std::cout<<line<<std::endl;
-
+            if(reader.eof())
+                break;
             reader.seekg(((int)reader.tellg() - line.getSize()), std::ios::beg);
             SvgElement element;
             element.read(line.getText());
-            return;
-//            if(line.contains("rect")) {
-//                temp.read(reader);
-//                temp.print(std::cout);
-//            }
-//            if(line.contains("line"))
-//            {
-//                tempLine.read(reader);
-//                tempLine.print(std::cout);
-//            }
-//            if(line.contains("circle"))
-//            {
-//                tempCircle.read(reader);
-//                tempCircle.print(std::cout);
-//            }
+            if(element.getName().contains("rect"))
+            {
+                tempRect.read(element);
+                this->add(&tempRect);
+                reader>>line;
+            }
+            else if(element.getName().contains("circle"))
+            {
+                tempCircle.read(element);
+                this->add(&tempCircle);
+                reader>>line;
+            }
+            else if(element.getName().contains("line"))
+            {
+                tempLine.read(element);
+                this->add(&tempLine);
+                reader>>line;
+            }
+            if(line.contains("/svg"))
+                break;
         }
+        this->print();
 
         reader.close();
     }
 
 
 
+}
+
+void SvgContainer::print() const{
+    for (int i = 0; i < this->size ; ++i) {
+        std::cout<<i + 1<<". ";
+        this->shapes[i]->print(std::cout);
+    }
 }

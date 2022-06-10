@@ -37,15 +37,19 @@ void Line::write(std::ostream &out) {
     out<<std::endl;
 }
 
-void Line::read(std::istream &in) {
-    in.ignore(14);
-    in>>x1;
-    in.ignore(6);
-    in>>y1;
-    in.ignore(6);
-    in>>x2;
-    in.ignore(6);
-    in>>y2;
-    in.ignore(10);
-    in>>stroke;
+void Line::read(SvgElement & element) {
+    Attribute * attributes = element.getAttributes();
+    int count = element.getAttrCount();
+    for (int i = 0; i < count ; ++i) {
+        if(attributes[i].key.contains("x1"))
+            this->x1 = (int)attrValueToInt(attributes[i].value);
+        else if(attributes[i].key.contains("y1"))
+            this->y1 = (int)attrValueToInt(attributes[i].value);
+        else if(attributes[i].key.contains("x2"))
+            this->x2 = (int)attrValueToInt(attributes[i].value);
+        else if(attributes[i].key.contains("y2"))
+            this->y2 = (int)attrValueToInt(attributes[i].value);
+        else if(attributes[i].key.contains("stroke"))
+            this->stroke = attributes[i].value;
+    }
 }

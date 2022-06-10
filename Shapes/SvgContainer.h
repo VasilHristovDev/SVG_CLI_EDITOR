@@ -35,6 +35,9 @@ public:
     ///read all svg elements from a file and add them to the container
     void readSvgElementsFromFile(SvgFile & file);
 
+    ///print all current elements inside container
+    void print() const;
+
     ///an indexation operator that returns the element standing on the index inside of the container
     Shape *operator[](unsigned index);
 

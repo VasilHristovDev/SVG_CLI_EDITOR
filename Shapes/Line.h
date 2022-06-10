@@ -13,7 +13,7 @@ public:
     Line();
     Line(int x1, int y1, int x2, int y2, const char * stroke);
 
-    void read(std::istream &in) override;
+    void read(SvgElement & element) override;
     void write(std::ostream & out) override;
     void print(std::ostream & out) override;
     virtual Line * copy() {

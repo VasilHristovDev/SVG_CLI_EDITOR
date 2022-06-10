@@ -52,8 +52,9 @@ bool SvgFile::markupTagCorrect(String &line) const{
     {
         currentChar++;
 
-        if(lineToCheck[currentChar] != ' ' && lineToCheck[currentChar] != '\n')
+        if(lineToCheck[currentChar] != ' ' && lineToCheck[currentChar] != '\n' && lineToCheck[currentChar] != '\r')
         {
+            std::cout<<(int)lineToCheck[currentChar]<<std::endl;
             nothingAfterClosingTag = false;
         }
     }

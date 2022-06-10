@@ -13,7 +13,7 @@ private:
 public:
     Rectangle();
     Rectangle(int width, int height, int x, int y, const char * fill);
-    void read(std::istream & in) override;
+    void read(SvgElement & element) override;
     void write(std::ostream & out) override;
     void print(std::ostream & out) override;
 

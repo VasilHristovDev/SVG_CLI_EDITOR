@@ -14,15 +14,19 @@ Circle::Circle(int cx, int cy, int r, const char *fill) {
     this->fill = fill;
 }
 
-void Circle::read(std::istream &in) {
-    in.ignore(16);
-    in>>cx;
-    in.ignore(6);
-    in>>cy;
-    in.ignore(5);
-    in>>r;
-    in.ignore(8);
-    in>>fill;
+void Circle::read(SvgElement & element) {
+    Attribute * attributes = element.getAttributes();
+    int count = element.getAttrCount();
+    for (int i = 0; i < count ; ++i) {
+        if(attributes[i].key.contains("cx"))
+            this->cx = attrValueToInt(attributes[i].value);
+        else if(attributes[i].key.contains("cy"))
+            this->cy = attrValueToInt(attributes[i].value);
+        else if(attributes[i].key.contains("r"))
+            this->r = attrValueToInt(attributes[i].value);
+        else if(attributes[i].key.contains("fill"))
+            this->fill = attributes[i].value;
+    }
 }
 
 void Circle::print(std::ostream &out) {
@@ -34,7 +38,6 @@ void Circle::print(std::ostream &out) {
 }
 
 void Circle::write(std::ostream &out) {
-    out<<"    ";
     out<<"<circle ";
     out<<"cx=\""<<this->cx<<"\" ";
     out<<"cy=\""<<this->cy<<"\" ";

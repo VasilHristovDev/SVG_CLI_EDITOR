@@ -12,7 +12,7 @@ public:
     Circle();
     Circle(int cx, int cy, int r, const char * fill);
 
-    void read(std::istream & in) override;
+    void read(SvgElement & element) override;
     void write(std::ostream & out) override;
     void print(std::ostream & out) override;
 

@@ -36,15 +36,20 @@ void Rectangle::print(std::ostream &out) {
     out<<"fill: "<<this->fill<<std::endl;
 }
 
-void Rectangle::read(std::istream &in) {
-    in.ignore(12);
-    in>>x;
-    in.ignore(5);
-    in>>y;
-    in.ignore(9);
-    in>>width;
-    in.ignore(10);
-    in>>height;
-    in.ignore(8);
-    in>>fill;
+void Rectangle::read(SvgElement & element) {
+    Attribute * attributes = element.getAttributes();
+    int count = element.getAttrCount();
+    for (int i = 0; i < count ; ++i) {
+        if(attributes[i].key == "x")
+            this->x = (int)attrValueToInt(attributes[i].value);
+        else if(attributes[i].key == "y")
+            this->y = (int)attrValueToInt(attributes[i].value);
+        else if(attributes[i].key.contains("width"))
+            this->width = (int)attrValueToInt(attributes[i].value);
+        else if(attributes[i].key.contains("height"))
+            this->height = (int)attrValueToInt(attributes[i].value);
+        else if(attributes[i].key.contains("fill"))
+            this->fill = attributes[i].value;
+    }
+
 }

@@ -2,7 +2,7 @@
 #define SVG_CLI_EDITOR_CLI_HANDLER_H
 
 #include <iostream>
-#include <windows.h>
+//#include <windows.h>
 
 #include "CliHelperMessages.h"
 #include "../Files/File.cpp"
@@ -125,7 +125,7 @@ void CLI_Handler::handleRender() {
         SvgFile file(this->path.getText());
         if(file.isCorrectFormat())
         {
-            ShellExecute(NULL, "open", this->path.getText(), NULL, NULL, SW_SHOWNORMAL);
+//            ShellExecute(NULL, "open", this->path.getText(), NULL, NULL, SW_SHOWNORMAL);
             return;
         }
         std::cerr<<CliHelperMessages::FILE_NOT_IN_CORRECT_FORMAT<<std::endl;

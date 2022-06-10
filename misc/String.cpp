@@ -61,7 +61,7 @@ std::ostream &operator<<(std::ostream &out, const String &readable) {
 }
 //copy constructor
 String::String(const String &string) {
-    this->text = new char[string.getSize()];
+    this->text = new char[string.getSize() + 1];
     strcpy(this->text,string.getText());
 }
 //procedural way to check if a string is contained inside another string
@@ -108,7 +108,7 @@ bool String::operator==(const String &other) {
     return counter == this->size;
 }
 
-String  String::strip(const String &other) {
+String String::strip(const String &other) {
     if(this->size < other.size)
         return *this;
 
