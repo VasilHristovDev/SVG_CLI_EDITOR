@@ -15,6 +15,7 @@ public:
     String & getName();
     Attribute * getAttributes();
     int getAttrCount() const;
+    ~SvgElement();
 };
 
 

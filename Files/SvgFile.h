@@ -5,11 +5,14 @@
 
 class SvgFile: public File {
 public:
-    SvgFile(const char * fileName): File(fileName){};
+    SvgFile():File(){};
+    explicit SvgFile(const char * fileName): File(fileName){};
     bool isCorrectFormat() override;
     bool markupTagCorrect(String& line) const;
     bool markupTagCorrectSvgElement(String & line) const;
     bool hasCorrectExtension() override;
+
+
 
 };
 

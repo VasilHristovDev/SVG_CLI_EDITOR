@@ -13,3 +13,7 @@ String File::getFileName()  {
     return this->fileName;
 }
 
+void File::setFileName(const char * _fileName) {
+    this->fileName = _fileName;
+}
+

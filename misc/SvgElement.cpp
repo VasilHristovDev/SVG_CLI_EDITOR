@@ -17,7 +17,6 @@ SvgElement::SvgElement(const char *name, Attribute * attributes, int attrCount) 
 
 
 void SvgElement::read(const char *line) {
-    std::cout<<line<<std::endl;
     int currChar = 0;
     while(line[currChar] != '<')
         ++currChar;
@@ -71,4 +70,8 @@ Attribute *SvgElement::getAttributes() {
 
 int SvgElement::getAttrCount() const {
     return this->attrCount;
+}
+
+SvgElement::~SvgElement() {
+    delete [] this->attributes;
 }

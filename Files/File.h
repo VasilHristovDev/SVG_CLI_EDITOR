@@ -8,6 +8,10 @@ class File {
 protected:
     String fileName;
 public:
+    File()
+    {
+        this->fileName = "<file_name>";
+    }
     File(const char * fileName);
     static bool exists(const char * file);
 
@@ -15,6 +19,7 @@ public:
     virtual bool isCorrectFormat() {
         return true;
     };
+    void setFileName(const char * fileName);
     virtual bool hasCorrectExtension() {
         return true;
     }

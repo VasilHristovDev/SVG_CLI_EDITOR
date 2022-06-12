@@ -3,6 +3,7 @@
 
 #include <iostream>
 //#include <windows.h>
+#include <unistd.h>
 
 #include "CliHelperMessages.h"
 #include "../Files/File.cpp"
@@ -12,11 +13,16 @@
 enum COMMANDS {
     OPEN, CLOSE, SAVE, SAVE_AS, HELP, EXIT, RENDER, UNKNOWN_COMMAND
 };
+enum SVG_COMMANDS {
+    PRINT, CREATE, ERASE, TRANSLATE, WITHIN
+};
 
 class CLI_Handler {
 private:
+    SvgContainer container;
     COMMANDS command;
     String path;
+    SvgFile currentOpenFile;
     bool isFileOpen = false;
 public:
     CLI_Handler();
@@ -31,6 +37,13 @@ public:
     void handleSaveAs();
     void handleHelp();
     void handleRender();
+    void handleExit();
+
+    //svg file commands
+    void handlePrint();
+    void handleErase();
+    void handleTranslate();
+    void handleWithin();
 
     void setCommand(COMMANDS commands);
 
@@ -58,7 +71,7 @@ void CLI_Handler::action() {
             this->handleRender();
             break;
         case EXIT:
-            std::cout<<"Goodbye :("<<std::endl;
+            this->handleExit();
             return;
         case UNKNOWN_COMMAND:
         default:
@@ -74,14 +87,14 @@ CLI_Handler::CLI_Handler() {
     this->isFileOpen = false;
 }
 
-CLI_Handler::CLI_Handler(COMMANDS command, const char * path) {
+CLI_Handler::CLI_Handler(COMMANDS command, const char * path):container(),currentOpenFile() {
     this->command = command;
     this->path = path;
     this->isFileOpen = false;
 }
 
-void CLI_Handler::setCommand(COMMANDS command) {
-    this->command = command;
+void CLI_Handler::setCommand(COMMANDS _command) {
+    this->command = _command;
 }
 
 void CLI_Handler::setPath(String &string) {
@@ -91,18 +104,16 @@ void CLI_Handler::setPath(String &string) {
 void CLI_Handler::handleOpen() {
     if(this->path == "")
     {
-        std::cerr<<"No path provided!"<<std::endl;
+        std::cerr<<CliHelperMessages::NO_PATH_PROVIDED<<std::endl;
         return;
     }
     if(File::exists(this->path.getText()))
     {
-        SvgFile svgFile(this->path.getText());
-        if(svgFile.isCorrectFormat())
+        this->currentOpenFile.setFileName(this->path.getText());
+        if(this->currentOpenFile.isCorrectFormat())
         {
             this->isFileOpen = true;
-            std::cout<<"BACHKAM"<<std::endl;
-            SvgContainer container;
-            container.readSvgElementsFromFile(svgFile);
+            this->container.readSvgElementsFromFile(this->currentOpenFile);
         }
         else
         {
@@ -111,13 +122,13 @@ void CLI_Handler::handleOpen() {
 
     }
     else {
-        std::cout<<"The specified path does not exist or it is not a file!"<<std::endl;
+        std::cout<<CliHelperMessages::FILE_PATH_DOES_NOT_EXIST<<std::endl;
     }
 }
 void CLI_Handler::handleRender() {
     if(this->path == "")
     {
-        std::cerr<<"No path provided!"<<std::endl;
+        std::cerr<<CliHelperMessages::NO_PATH_PROVIDED<<std::endl;
         return;
     }
     if(File::exists(this->path.getText()))
@@ -139,30 +150,56 @@ void CLI_Handler::handleRender() {
 void CLI_Handler::handleClose() {
     if(this->isFileOpen)
     {
-
         this->isFileOpen = false;
     }
     else{
-        std::cout<<"No file is currently open!"<<std::endl;
+        std::cout<<CliHelperMessages::NO_FILE_OPEN<<std::endl;
     }
 }
 
 void CLI_Handler::handleSave() {
     if(this->isFileOpen)
     {
+        std::ofstream out;
+        out.open(this->currentOpenFile.getFileName().getText());
 
+        if(out)
+        {
+            this->container.write(out);
+            out.close();
+            std::cout<<CliHelperMessages::SAVE_CHANGES_TO_FILE<<this->currentOpenFile.getFileName()<<std::endl;
+        }
     }
     else{
-        std::cout<<"No file is currently open!"<<std::endl;
+        std::cout<<CliHelperMessages::NO_FILE_OPEN<<std::endl;
     }
 }
 void CLI_Handler::handleSaveAs() {
-    if(this->isFileOpen)
-    {
+    if(this->isFileOpen) {
+        if(this->path == "")
+        {
+            std::cerr<<CliHelperMessages::NO_PATH_PROVIDED<<std::endl;
+            return;
+        }
+        if(!File::exists(this->path.getText()))
+        {
+            std::ofstream out;
+            out.open(this->path.getText());
+            if (out) {
+                this->container.write(out);
+                out.close();
+                std::cout<<CliHelperMessages::SAVE_CHANGES_TO_FILE<<this->path<<std::endl;
+            }
+            else
+            {
+                std::cout<<CliHelperMessages::FILE_OPEN_ERROR_MESSAGE<<std::endl;
+            }
+            this->isFileOpen = false;
+        }
 
     }
     else{
-        std::cout<<"No file is currently open!"<<std::endl;
+        std::cout<<CliHelperMessages::NO_FILE_OPEN<<std::endl;
     }
 }
 
@@ -170,24 +207,6 @@ void CLI_Handler::handleHelp() {
     std::cout << CliHelperMessages::CLI_COMMANDS << std::endl;
 }
 
-COMMANDS stringToCommand(String &string) {
-    if (string.contains(CliHelperMessages::OPEN))
-        return OPEN;
-    if (string.contains(CliHelperMessages::CLOSE))
-        return CLOSE;
-    if (string.contains(CliHelperMessages::RENDER))
-        return RENDER;
-    if (string.contains(CliHelperMessages::SAVE))
-        return SAVE;
-    if (string.contains(CliHelperMessages::SAVE_AS))
-        return SAVE_AS;
-    if (string.contains(CliHelperMessages::EXIT))
-        return EXIT;
-    if (string.contains(CliHelperMessages::HELP))
-        return HELP;
-
-    return UNKNOWN_COMMAND;
-}
 String stripCommand(String & command)
 {
     if(command.contains(CliHelperMessages::OPEN))
@@ -204,6 +223,52 @@ String stripCommand(String & command)
     }
     return command.getText();
 }
+
+void CLI_Handler::handleExit() {
+    if(this->isFileOpen)
+    {
+        std::cout<<CliHelperMessages::UNSAVED_CHANGES<<std::endl;
+        String input;
+        std::cin>>input;
+        if(input.contains(CliHelperMessages::CLOSE))
+        {
+            this->handleClose();
+            return;
+        }
+        if(input.contains(CliHelperMessages::SAVE) && !input.contains(CliHelperMessages::SAVE_AS))
+        {
+            this->handleSave();
+            return;
+        }
+        if(input.contains(CliHelperMessages::SAVE_AS))
+        {
+            String newPath = stripCommand(input).getText();
+            setPath(newPath);
+            this->handleSaveAs();
+            return;
+        }
+    }
+}
+
+COMMANDS stringToCommand(String &string) {
+    if (string.contains(CliHelperMessages::OPEN))
+        return OPEN;
+    if (string.contains(CliHelperMessages::CLOSE))
+        return CLOSE;
+    if (string.contains(CliHelperMessages::RENDER))
+        return RENDER;
+    if (string.contains(CliHelperMessages::SAVE_AS))
+        return SAVE_AS;
+    if (string.contains(CliHelperMessages::SAVE) && !string.contains(CliHelperMessages::SAVE_AS))
+        return SAVE;
+    if (string.contains(CliHelperMessages::EXIT))
+        return EXIT;
+    if (string.contains(CliHelperMessages::HELP))
+        return HELP;
+
+    return UNKNOWN_COMMAND;
+}
+
 
 
 #endif //SVG_CLI_EDITOR_CLI_HANDLER_H

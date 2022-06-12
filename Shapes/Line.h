@@ -16,9 +16,10 @@ public:
     void read(SvgElement & element) override;
     void write(std::ostream & out) override;
     void print(std::ostream & out) override;
-    virtual Line * copy() {
+    virtual Line * copy() override {
         return new Line(*this);
     }
+     ~Line() override = default;
 };
 
 

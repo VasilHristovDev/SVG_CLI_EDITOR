@@ -16,9 +16,10 @@ public:
     void write(std::ostream & out) override;
     void print(std::ostream & out) override;
 
-    virtual Circle * copy() {
+    virtual Circle * copy() override {
         return new Circle(*this);
     };
+   virtual ~Circle() = default;
 };
 
 

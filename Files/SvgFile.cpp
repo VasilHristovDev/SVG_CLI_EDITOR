@@ -37,7 +37,7 @@ bool SvgFile::isCorrectFormat()  {
 }
 
 bool SvgFile::markupTagCorrect(String &line) const{
-    char * lineToCheck = new char [line.getSize()];
+    char * lineToCheck = new char [line.getSize() + 1];
     strcpy(lineToCheck, line.getText());
     int currentChar = 0;
     while(lineToCheck[currentChar] == ' ')

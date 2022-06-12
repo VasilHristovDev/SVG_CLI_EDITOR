@@ -75,7 +75,7 @@ void SvgContainer::add(Shape * shape) {
 
 void SvgContainer::clean() {
     for (int i = 0; i < this->size ; ++i) {
-        delete [] &this->shapes[i];
+        delete this->shapes[i];
     }
     delete [] this->shapes;
 }
@@ -106,7 +106,7 @@ void SvgContainer::readSvgElementsFromFile(SvgFile &file) {
         {
             reader>>line;
         }
-        while(!line.contains("</svg") || !reader.eof())
+        while(!line.contains("</svg") && !reader.eof())
         {
             reader>>line;
             if(reader.eof())
@@ -132,11 +132,8 @@ void SvgContainer::readSvgElementsFromFile(SvgFile &file) {
                 this->add(&tempLine);
                 reader>>line;
             }
-            if(line.contains("/svg"))
-                break;
         }
-        this->print();
-
+        std::cout<<"Successfully read svg elements from file: "<<file.getFileName()<<std::endl;
         reader.close();
     }
 
@@ -149,4 +146,14 @@ void SvgContainer::print() const{
         std::cout<<i + 1<<". ";
         this->shapes[i]->print(std::cout);
     }
+}
+void SvgContainer::write(std::ofstream & out) const {
+    out<<"<svg xmlns=";
+    out<<"\"http://www.w3.org/2000/svg\"";
+    out<<">"<<std::endl;
+    for (int i = 0; i <size ; ++i) {
+        out<<"     ";
+        this->shapes[i]->write(out);
+    }
+    out<<"</svg>";
 }

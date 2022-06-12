@@ -17,9 +17,10 @@ public:
     void write(std::ostream & out) override;
     void print(std::ostream & out) override;
 
-    virtual Rectangle * copy() {
+    virtual Rectangle * copy() override{
         return new Rectangle(*this);
     };
+    virtual ~Rectangle() = default;
 };
 
 

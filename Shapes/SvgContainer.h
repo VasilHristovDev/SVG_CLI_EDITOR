@@ -38,6 +38,9 @@ public:
     ///print all current elements inside container
     void print() const;
 
+    ///write all svg elements inside a file
+    void write(std::ofstream & out) const;
+
     ///an indexation operator that returns the element standing on the index inside of the container
     Shape *operator[](unsigned index);
 

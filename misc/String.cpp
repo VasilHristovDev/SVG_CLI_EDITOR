@@ -116,11 +116,14 @@ String String::strip(const String &other) {
     {
         int occupiedChar = 0;
         char * helperStr = new char [this->size - other.size + 3];
+        String returnable;
         for (int i = other.size + 2; i < this->size -1 ; ++i) {
             helperStr[occupiedChar++] = this->text[i];
         }
         helperStr[occupiedChar] = '\0';
-        return (String)helperStr;
+        returnable.setText(helperStr);
+        delete [] helperStr;
+        return (String) returnable;
     }
     return *this;
 }
