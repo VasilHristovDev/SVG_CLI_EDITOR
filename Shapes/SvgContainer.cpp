@@ -21,12 +21,12 @@ void SvgContainer::remove(unsigned int index) {
                 }
             }
         }
-
         //decrement size
         size--;
+        std::cout<<CliHelperMessages::ERASED_SUCCESSFULLY<<index<<std::endl;
+        return;
     }
-        //If no element was found
-        //TODO: Print no element found error
+    std::cout << CliHelperMessages::NO_ELEMENT_WITH_INDEX_WAS_FOUND << std::endl;
 }
 
 unsigned int SvgContainer::getIndex(Shape &shape) {
@@ -40,14 +40,13 @@ unsigned int SvgContainer::getIndex(Shape &shape) {
 }
 
 SvgContainer &SvgContainer::operator=(const SvgContainer &other) {
-    if(this != &other)
-    {
-        for (int i = 0; i < this->cap ; ++i) {
-            delete [] this->shapes[i];
+    if (this != &other) {
+        for (int i = 0; i < this->cap; ++i) {
+            delete[] this->shapes[i];
         }
-        delete [] this->shapes;
+        delete[] this->shapes;
 
-        this->shapes = new Shape * [other.cap];
+        this->shapes = new Shape *[other.cap];
         for (int i = 0; i < other.size; ++i) {
             this->shapes[i] = other.shapes[i]->copy();
         }
@@ -59,36 +58,36 @@ SvgContainer &SvgContainer::operator=(const SvgContainer &other) {
 
 SvgContainer::SvgContainer(int cap) {
     this->cap = cap;
-    this->shapes = new Shape * [this->cap];
+    this->shapes = new Shape *[this->cap];
     this->size = 0;
 }
 
 SvgContainer::SvgContainer() {
     this->cap = DEFAULT_CAP;
-    this->shapes = new Shape * [this->cap];
+    this->shapes = new Shape *[this->cap];
     this->size = 0;
 }
 
-void SvgContainer::add(Shape * shape) {
+void SvgContainer::add(Shape *shape) {
     this->shapes[size++] = shape->copy();
 }
 
 void SvgContainer::clean() {
-    for (int i = 0; i < this->size ; ++i) {
+    for (int i = 0; i < this->size; ++i) {
         delete this->shapes[i];
     }
-    delete [] this->shapes;
+    delete[] this->shapes;
 }
 
 SvgContainer::SvgContainer(const SvgContainer &other) {
-    for (int i = 0; i < this->size ; ++i) {
-        delete [] this->shapes[i];
+    for (int i = 0; i < this->size; ++i) {
+        delete[] this->shapes[i];
     }
-    delete [] this->shapes;
+    delete[] this->shapes;
 
     this->cap = other.cap;
-    this->shapes = new Shape * [this->cap];
-    for (int i = 0; i < other.size ; ++i) {
+    this->shapes = new Shape *[this->cap];
+    for (int i = 0; i < other.size; ++i) {
         this->add(other.shapes[i]);
     }
 
@@ -99,61 +98,53 @@ void SvgContainer::readSvgElementsFromFile(SvgFile &file) {
     class Rectangle tempRect;
     class Circle tempCircle;
     class Line tempLine;
-    if(reader)
-    {
+    if (reader) {
         String line;
-        while(!line.contains("<svg"))
-        {
-            reader>>line;
+        while (!line.contains("<svg")) {
+            reader >> line;
         }
-        while(!line.contains("</svg") && !reader.eof())
-        {
-            reader>>line;
-            if(reader.eof())
+        while (!line.contains("</svg") && !reader.eof()) {
+            reader >> line;
+            if (reader.eof())
                 break;
-            reader.seekg(((int)reader.tellg() - line.getSize()), std::ios::beg);
+            reader.seekg(((int) reader.tellg() - line.getSize()), std::ios::beg);
             SvgElement element;
             element.read(line.getText());
-            if(element.getName().contains("rect"))
-            {
+            if (element.getName().contains("rect")) {
                 tempRect.read(element);
                 this->add(&tempRect);
-                reader>>line;
-            }
-            else if(element.getName().contains("circle"))
-            {
+                reader >> line;
+            } else if (element.getName().contains("circle")) {
                 tempCircle.read(element);
                 this->add(&tempCircle);
-                reader>>line;
-            }
-            else if(element.getName().contains("line"))
-            {
+                reader >> line;
+            } else if (element.getName().contains("line")) {
                 tempLine.read(element);
                 this->add(&tempLine);
-                reader>>line;
+                reader >> line;
             }
         }
-        std::cout<<"Successfully read svg elements from file: "<<file.getFileName()<<std::endl;
+        std::cout << "Successfully read svg elements from file: " << file.getFileName() << std::endl;
         reader.close();
     }
 
 
-
 }
 
-void SvgContainer::print() const{
-    for (int i = 0; i < this->size ; ++i) {
-        std::cout<<i + 1<<". ";
+void SvgContainer::print() const {
+    for (int i = 0; i < this->size; ++i) {
+        std::cout << i + 1 << ". ";
         this->shapes[i]->print(std::cout);
     }
 }
-void SvgContainer::write(std::ofstream & out) const {
-    out<<"<svg xmlns=";
-    out<<"\"http://www.w3.org/2000/svg\"";
-    out<<">"<<std::endl;
-    for (int i = 0; i <size ; ++i) {
-        out<<"     ";
+
+void SvgContainer::write(std::ofstream &out) const {
+    out << "<svg xmlns=";
+    out << "\"http://www.w3.org/2000/svg\"";
+    out << ">" << std::endl;
+    for (int i = 0; i < size; ++i) {
+        out << "     ";
         this->shapes[i]->write(out);
     }
-    out<<"</svg>";
+    out << "</svg>";
 }

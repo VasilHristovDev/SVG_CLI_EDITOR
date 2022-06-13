@@ -11,11 +11,10 @@
 #include "../Shapes/SvgContainer.cpp"
 
 enum COMMANDS {
-    OPEN, CLOSE, SAVE, SAVE_AS, HELP, EXIT, RENDER, UNKNOWN_COMMAND
-};
-enum SVG_COMMANDS {
+    OPEN, CLOSE, SAVE, SAVE_AS, HELP, EXIT, RENDER, UNKNOWN_COMMAND,
     PRINT, CREATE, ERASE, TRANSLATE, WITHIN
 };
+
 
 class CLI_Handler {
 private:
@@ -24,11 +23,11 @@ private:
     String path;
     SvgFile currentOpenFile;
     bool isFileOpen = false;
+    bool hasUnsavedChanges = false;
 public:
     CLI_Handler();
 
     CLI_Handler(COMMANDS command,  const char * path = "/");
-
     //action based commands
     void action();
     void handleOpen();
@@ -40,10 +39,12 @@ public:
     void handleExit();
 
     //svg file commands
+    void handleCreate();
     void handlePrint();
     void handleErase();
     void handleTranslate();
     void handleWithin();
+    void handleNoFileIsOpen();
 
     void setCommand(COMMANDS commands);
 
@@ -57,10 +58,10 @@ void CLI_Handler::action() {
             break;
         case SAVE:
             this->handleSave();
-            break;
+            return;
         case SAVE_AS:
             this->handleSaveAs();
-            break;
+            return;
         case CLOSE:
            this->handleClose();
             break;
@@ -73,6 +74,15 @@ void CLI_Handler::action() {
         case EXIT:
             this->handleExit();
             return;
+        case PRINT:
+            this->handlePrint();
+            break;
+        case CREATE:
+            this->handleCreate();
+            break;
+        case ERASE:
+            this->handleErase();
+            break;
         case UNKNOWN_COMMAND:
         default:
             std::cout<<CliHelperMessages::UNKNOWN_COMMAND_USED<<std::endl;
@@ -117,7 +127,7 @@ void CLI_Handler::handleOpen() {
         }
         else
         {
-            std::cout<<"Ne bachkam :("<<std::endl;
+            std::cout<<CliHelperMessages::FILE_NOT_IN_CORRECT_FORMAT<<std::endl;
         }
 
     }
@@ -125,6 +135,7 @@ void CLI_Handler::handleOpen() {
         std::cout<<CliHelperMessages::FILE_PATH_DOES_NOT_EXIST<<std::endl;
     }
 }
+
 void CLI_Handler::handleRender() {
     if(this->path == "")
     {
@@ -173,7 +184,10 @@ void CLI_Handler::handleSave() {
     else{
         std::cout<<CliHelperMessages::NO_FILE_OPEN<<std::endl;
     }
+    this->isFileOpen = false;
+    this->hasUnsavedChanges = false;
 }
+
 void CLI_Handler::handleSaveAs() {
     if(this->isFileOpen) {
         if(this->path == "")
@@ -194,6 +208,7 @@ void CLI_Handler::handleSaveAs() {
             {
                 std::cout<<CliHelperMessages::FILE_OPEN_ERROR_MESSAGE<<std::endl;
             }
+            this->hasUnsavedChanges = false;
             this->isFileOpen = false;
         }
 
@@ -204,6 +219,10 @@ void CLI_Handler::handleSaveAs() {
 }
 
 void CLI_Handler::handleHelp() {
+    if(this->isFileOpen)
+    {
+        std::cout<<CliHelperMessages::SVG_COMMANDS<<std::endl;
+    }
     std::cout << CliHelperMessages::CLI_COMMANDS << std::endl;
 }
 
@@ -221,11 +240,15 @@ String stripCommand(String & command)
     {
         return command.strip(CliHelperMessages::RENDER);
     }
+    else if(command.contains(CliHelperMessages::ERASE))
+    {
+        return command.strip(CliHelperMessages::ERASE);
+    }
     return command.getText();
 }
 
 void CLI_Handler::handleExit() {
-    if(this->isFileOpen)
+    if(this->isFileOpen && this->hasUnsavedChanges)
     {
         std::cout<<CliHelperMessages::UNSAVED_CHANGES<<std::endl;
         String input;
@@ -250,6 +273,35 @@ void CLI_Handler::handleExit() {
     }
 }
 
+void CLI_Handler::handlePrint() {
+    if(this->isFileOpen && this->container.getSize() > 0)
+    {
+        this->container.print();
+    }
+    else {
+        this->handleNoFileIsOpen();
+    }
+}
+
+void CLI_Handler::handleNoFileIsOpen() {
+    std::cout<<CliHelperMessages::UNAVAILABLE_COMMAND<<std::endl;
+}
+
+void CLI_Handler::handleCreate() {
+    if(this->isFileOpen)
+    {
+        return;
+    }
+}
+
+void CLI_Handler::handleErase() {
+    if(!(this->path == "") && this->isFileOpen)
+    {
+        this->container.remove((int)attrValueToInt(this->path));
+        this->hasUnsavedChanges = true;
+    }
+}
+
 COMMANDS stringToCommand(String &string) {
     if (string.contains(CliHelperMessages::OPEN))
         return OPEN;
@@ -265,6 +317,10 @@ COMMANDS stringToCommand(String &string) {
         return EXIT;
     if (string.contains(CliHelperMessages::HELP))
         return HELP;
+    if(string.contains(CliHelperMessages::PRINT))
+        return PRINT;
+    if(string.contains(CliHelperMessages::ERASE))
+        return ERASE;
 
     return UNKNOWN_COMMAND;
 }
