@@ -41,6 +41,9 @@ public:
     ///write all svg elements inside a file
     void write(std::ofstream & out) const;
 
+    ///add a new element via input
+    void readFromConsole();
+
     ///an indexation operator that returns the element standing on the index inside of the container
     Shape *operator[](unsigned index);
 

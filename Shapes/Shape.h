@@ -11,6 +11,8 @@ public:
     virtual void print(std::ostream & out) = 0;
     virtual void write(std::ostream & out) = 0;
     virtual ~Shape() = default;
+
+    virtual void readFromConsole() = 0;
 };
 
 

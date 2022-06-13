@@ -46,3 +46,18 @@ void Circle::write(std::ostream &out) {
     out<<"/>";
     out<<std::endl;
 }
+
+void Circle::readFromConsole() {
+    std::cout<<"Enter cx:";
+    std::cin>>cx;
+
+    std::cout<<"Enter cy:";
+    std::cin>>cy;
+
+    std::cout<<"Enter r:";
+    std::cin>>r;
+
+    std::cin.ignore();
+    std::cout<<"Enter fill:";
+    std::cin>>fill;
+}

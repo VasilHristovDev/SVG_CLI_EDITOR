@@ -148,3 +148,34 @@ void SvgContainer::write(std::ofstream &out) const {
     }
     out << "</svg>";
 }
+
+void SvgContainer::readFromConsole() {
+    std::cout<<"Enter shape:"<<std::endl;
+    String shapeType;
+    std::cin>>shapeType;
+    Shape * shape;
+    if(shapeType=="rectangle" || shapeType == "Rectangle")
+    {
+        shape = new Rectangle;
+        shape->readFromConsole();
+        this->add(shape);
+        return;
+    }
+
+    if(shapeType == "circle" || shapeType == "Circle")
+    {
+        shape = new Circle;
+        shape->readFromConsole();
+        this->add(shape);
+        return;
+    }
+
+    if(shapeType == "line" || shapeType == "Line")
+    {
+        shape = new Line;
+        shape->readFromConsole();
+        this->add(shape);
+        return;
+    }
+    std::cout<<CliHelperMessages::UNSUPPORTED_SVG_ELEMENT<<std::endl;
+}

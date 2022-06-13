@@ -5,8 +5,8 @@
 class CliHelperMessages {
 public:
     //opening file helper messages
-    static const String FILE_OPENED_MESSAGE;
-    static const String FILE_OPEN_ERROR_MESSAGE;
+    static const char * FILE_OPENED_MESSAGE;
+    static const char * FILE_OPEN_ERROR_MESSAGE;
     static const char * FILE_PATH_DOES_NOT_EXIST;
     static const char * FILE_NOT_IN_CORRECT_FORMAT;
 
@@ -24,6 +24,7 @@ public:
     static const char * EXIT;
     static const char * PRINT;
     static const char * ERASE;
+    static const char * CREATE;
     static const char * UNKNOWN_COMMAND_USED;
 
     //cli commands
@@ -40,10 +41,11 @@ public:
     static const char * UNAVAILABLE_COMMAND;
     static const char * ERASED_SUCCESSFULLY;
     static const char * NO_ELEMENT_WITH_INDEX_WAS_FOUND;
+    static const char * UNSUPPORTED_SVG_ELEMENT;
 
 };
-const String CliHelperMessages::FILE_OPENED_MESSAGE = "Successfully opened file ";
-const String CliHelperMessages::FILE_OPEN_ERROR_MESSAGE = "Could not open file ";
+const char * CliHelperMessages::FILE_OPENED_MESSAGE = "Successfully opened file ";
+const char * CliHelperMessages::FILE_OPEN_ERROR_MESSAGE = "Could not open file ";
 const char * CliHelperMessages::FILE_NOT_IN_CORRECT_FORMAT = "The given file is not the correct format! ";
 const char * CliHelperMessages::FILE_PATH_DOES_NOT_EXIST = "The specified path does not exist or it is not a file!";
 const char * CliHelperMessages::OPEN = "open";
@@ -55,6 +57,7 @@ const char * CliHelperMessages::HELP = "help";
 const char * CliHelperMessages::RENDER = "render";
 const char * CliHelperMessages::PRINT = "print";
 const char * CliHelperMessages::ERASE = "erase";
+const char * CliHelperMessages::CREATE = "create";
 const char * CliHelperMessages::CLI_COMMANDS = "\nList of available commands for the CLI:\n"
                                                "open \"<path_to_file>\"         opens a file and checks if it is correct\n"
                                                "close                         closes a file\n"
@@ -83,4 +86,5 @@ const char * CliHelperMessages::NO_PATH_PROVIDED = "No path was provided!";
 const char * CliHelperMessages::UNAVAILABLE_COMMAND = "This command is only available when a file is currently open!";
 const char * CliHelperMessages::NO_ELEMENT_WITH_INDEX_WAS_FOUND = "No element with the given index was found!";
 const char * CliHelperMessages::ERASED_SUCCESSFULLY = "Successfully removed element at index ";
+const char * CliHelperMessages::UNSUPPORTED_SVG_ELEMENT = "The element you entered is currently not supported by this program!";
 #endif //SVG_CLI_EDITOR_HELPER_MESSAGES_H

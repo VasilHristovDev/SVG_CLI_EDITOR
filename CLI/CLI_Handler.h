@@ -290,6 +290,7 @@ void CLI_Handler::handleNoFileIsOpen() {
 void CLI_Handler::handleCreate() {
     if(this->isFileOpen)
     {
+        this->container.readFromConsole();
         return;
     }
 }
@@ -317,6 +318,8 @@ COMMANDS stringToCommand(String &string) {
         return EXIT;
     if (string.contains(CliHelperMessages::HELP))
         return HELP;
+    if (string.contains(CliHelperMessages::CREATE))
+        return CREATE;
     if(string.contains(CliHelperMessages::PRINT))
         return PRINT;
     if(string.contains(CliHelperMessages::ERASE))

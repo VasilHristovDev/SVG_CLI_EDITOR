@@ -53,3 +53,22 @@ void Line::read(SvgElement & element) {
             this->stroke = attributes[i].value;
     }
 }
+
+void Line::readFromConsole() {
+    std::cout<<"Enter x1:";
+    std::cin>>x1;
+
+    std::cout<<"Enter y1:";
+    std::cin>>y1;
+
+    std::cout<<"Enter x2:";
+    std::cin>>x2;
+
+    std::cout<<"Enter y2:";
+    std::cin>>y2;
+
+    std::cin.ignore();
+
+    std::cout<<"Enter stroke:";
+    std::cin>>stroke;
+}

@@ -51,5 +51,22 @@ void Rectangle::read(SvgElement & element) {
         else if(attributes[i].key.contains("fill"))
             this->fill = attributes[i].value;
     }
+}
 
+void Rectangle::readFromConsole() {
+    std::cout<<"Enter x:";
+    std::cin>>x;
+
+    std::cout<<"Enter y:";
+    std::cin>>y;
+
+    std::cout<<"Enter width:";
+    std::cin>>width;
+
+    std::cout<<"Enter height:";
+    std::cin>>height;
+
+    std::cin.ignore();
+    std::cout<<"Enter fill:";
+    std::cin>>fill;
 }
