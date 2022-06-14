@@ -86,6 +86,9 @@ void CLI_Handler::action() {
         case TRANSLATE:
             this->handleTranslate();
             break;
+        case WITHIN:
+            this->handleWithin();
+            break;
         case UNKNOWN_COMMAND:
         default:
             std::cout<<CliHelperMessages::UNKNOWN_COMMAND_USED<<std::endl;
@@ -251,6 +254,10 @@ String stripCommand(String & command)
     {
         return command.strip(CliHelperMessages::TRANSLATE);
     }
+    else if(command.contains(CliHelperMessages::WITHIN))
+    {
+        return command.strip(CliHelperMessages::WITHIN);
+    }
     return command.getText();
 }
 
@@ -327,6 +334,10 @@ void CLI_Handler::handleTranslate() {
     }
 }
 
+void CLI_Handler::handleWithin() {
+    this->container.within(this->path);
+}
+
 COMMANDS stringToCommand(String &string) {
     if (string.contains(CliHelperMessages::OPEN))
         return OPEN;
@@ -350,6 +361,8 @@ COMMANDS stringToCommand(String &string) {
         return ERASE;
     if(string.contains(CliHelperMessages::TRANSLATE))
         return TRANSLATE;
+    if(string.contains(CliHelperMessages::WITHIN))
+        return WITHIN;
 
     return UNKNOWN_COMMAND;
 }

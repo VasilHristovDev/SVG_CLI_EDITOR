@@ -17,6 +17,9 @@ public:
     void print(std::ostream & out) override;
     void setX(int horizontal) override;
     void setY(int vertical) override;
+    bool isWithinCircle(int cx, int cy, int r) override;
+    bool isWithinRectangle(int x, int y, int width, int height) override;
+
     void readFromConsole() override;
 
     virtual Circle * copy() override {

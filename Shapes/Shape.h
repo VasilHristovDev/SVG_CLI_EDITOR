@@ -12,6 +12,9 @@ public:
     virtual void write(std::ostream & out) = 0;
     virtual void setX(int horizontal) = 0;
     virtual void setY(int vertical) = 0;
+    virtual bool isWithinCircle(int cx, int cy, int r) = 0;
+    virtual bool isWithinRectangle(int x, int y, int width, int height) = 0;
+
     virtual ~Shape() = default;
 
     virtual void readFromConsole() = 0;

@@ -69,3 +69,32 @@ void Circle::setX(int horizontal) {
 void Circle::setY(int vertical) {
     this->cy = this->cy + vertical;
 }
+
+bool Circle::isWithinCircle(int _cx, int _cy, int _r) {
+    Point bigCenter(_cx, _cy);
+    Point smallCenter(this->cx, this->cy);
+
+    if(distance(smallCenter, bigCenter) + this->r < _r)
+        return true;
+    return false;
+}
+
+bool Circle::isWithinRectangle(int x, int y, int width, int height) {
+    Point A(x,y);
+    Point B(x + width,y);
+    Point C(x,y + height);
+
+    Point center(this->cx, this->cy);
+    Point testTop(this->cx, this->cy - r);
+    Point testBottom(this->cx, this->cy + r);
+    Point testLeft(this->cx - r, this->cy);
+    Point testRight(this->cx + r, this->cy);
+
+    Point testable [] = {center,testTop, testBottom, testLeft, testRight};
+
+    for (int i = 0; i < 5 ; ++i) {
+        if(!(testable[i].x > A.x && testable[i].x < B.x && testable[i].y > A.y && testable[i].y < C.y))
+            return false;
+    }
+    return true;
+}

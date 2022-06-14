@@ -82,3 +82,26 @@ void Line::setY(int vertical) {
     this->y1 = this->y1 + vertical;
     this->y2 = this->y2 + vertical;
 }
+
+bool Line::isWithinCircle(int cx, int cy, int r) {
+    Point start(this->x1, this->y1);
+    Point end(this->x2, this->y2);
+
+    if((cx - start.x) * (cx - start.x) + (cy - start.y) * (cy - start.y) < r * r && (cx - end.x) * (cx - end.x) + (cy - end.y) * (cy - end.y) < r * r)
+        return true;
+
+    return false;
+}
+
+bool Line::isWithinRectangle(int x, int y, int width, int height) {
+    Point startPoint(this->x1, this->y1);
+    Point endPoint(this->x2, this->y2);
+
+    Point A(x,y);
+    Point B(x + width, y);
+    Point C(x, y + height);
+    Point D(x + width, y + height);
+
+    return startPoint.x > A.x && startPoint.x > C.x && startPoint.y > A.y && startPoint.y < C.y
+        && endPoint.x < B.x && endPoint.x < D.x && endPoint.y > B.y && endPoint.y < D.y;
+}

@@ -78,3 +78,24 @@ void Rectangle::setX(int horizontal) {
 void Rectangle::setY(int vertical) {
     this->y = this->y + vertical;
 }
+
+bool Rectangle::isWithinCircle(int cx, int cy, int r) {
+    //define all four points
+    Point point1(this->x, this->y);
+    Point point2(this->x + this->width, this->y);
+    Point point3(this->x, this->y + this->height);
+    Point point4(this->x + this->width, this->y + this->height);
+    Point points[] = {point1, point2, point3, point4};
+
+    //check if they are all inside the circle
+    for (int i = 0; i < 4 ; ++i) {
+        if((cx - points[i].x) * (cx - points[i].x) + (cy - points[i].y) * (cy - points[i].y) > r * r)
+            return false;
+    }
+    return true;
+}
+
+bool Rectangle::isWithinRectangle(int _x, int _y, int _width, int _height) {
+    return (_x + width) < (this->x + this->width) && (this->x) > (_x) && (this->y) > (_y)
+           && (this->y + this->height) < (y + height);
+}

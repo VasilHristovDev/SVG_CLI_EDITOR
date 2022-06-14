@@ -26,6 +26,7 @@ public:
     static const char * ERASE;
     static const char * CREATE;
     static const char * TRANSLATE;
+    static const char * WITHIN;
     static const char * UNKNOWN_COMMAND_USED;
 
     //cli commands
@@ -63,6 +64,7 @@ const char * CliHelperMessages::PRINT = "print";
 const char * CliHelperMessages::ERASE = "erase";
 const char * CliHelperMessages::CREATE = "create";
 const char * CliHelperMessages::TRANSLATE = "translate";
+const char * CliHelperMessages::WITHIN = "within";
 
 const char * CliHelperMessages::CLI_COMMANDS = "\nList of available commands for the CLI:\n"
                                                "open \"<path_to_file>\"         opens a file and checks if it is correct\n"

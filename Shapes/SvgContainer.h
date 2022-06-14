@@ -47,6 +47,9 @@ public:
     ///translate a figure by given index
     void translate(int vertical = 0, int horizontal = 0, int index = -1);
 
+    ///print all figures within an area
+    void within(String & figure);
+
     ///an indexation operator that returns the element standing on the index inside of the container
     Shape *operator[](unsigned index);
 

@@ -202,3 +202,55 @@ void SvgContainer::translate(int vertical, int horizontal, int index) {
     std::cout<<CliHelperMessages::SUCCESSFULLY_TRANSLATED_ALL<<std::endl;
 
 }
+void SvgContainer::within(String & figure)
+{
+    std::cout<<figure<<std::endl;
+    if(figure == "circle")
+    {
+        int cx, cy, r;
+        std::cout<<"cx:";
+        std::cin>>cx;
+        std::cout<<"cy:";
+        std::cin>>cy;
+        std::cout<<"r:";
+        std::cin>>r;
+        SvgContainer tempContainer;
+        for (int i = 0; i < this->size ; ++i) {
+            if(this->shapes[i]->isWithinCircle(cx,cy,r))
+                tempContainer.add(this->shapes[i]);
+        }
+        if(tempContainer.getSize() > 0)
+        {
+            tempContainer.print();
+        }
+        else {
+            std::cout<<"No figures within circle "<<cx<<" "<<cy<<" "<<r<<std::endl;
+        }
+    }
+    else if(figure == "rectangle")
+    {
+        int x,y,width,height;
+        std::cout<<"x:";
+        std::cin>>x;
+        std::cout<<"y:";
+        std::cin>>y;
+        std::cout<<"width:";
+        std::cin>>width;
+        std::cout<<"height:";
+        std::cin>>height;
+
+        SvgContainer tempContainer;
+
+        for (int i = 0; i < size ; ++i) {
+            if(this->shapes[i]->isWithinRectangle(x,y,width,height))
+                tempContainer.add(this->shapes[i]);
+        }
+        if(tempContainer.getSize() > 0)
+        {
+            tempContainer.print();
+        }
+        else {
+            std::cout<<"No figures within rectangle "<<x<<" "<<y<<" "<<width<<" "<<height<<std::endl;
+        }
+    }
+}
