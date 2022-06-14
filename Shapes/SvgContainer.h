@@ -18,7 +18,7 @@ private:
     void clean();
 public:
     SvgContainer();
-    SvgContainer(int cap);
+    explicit SvgContainer(int cap);
     SvgContainer(const SvgContainer & other);
 
     //Add a shape to the container
@@ -43,6 +43,9 @@ public:
 
     ///add a new element via input
     void readFromConsole();
+
+    ///translate a figure by given index
+    void translate(int vertical = 0, int horizontal = 0, int index = -1);
 
     ///an indexation operator that returns the element standing on the index inside of the container
     Shape *operator[](unsigned index);

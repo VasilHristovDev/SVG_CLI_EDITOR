@@ -61,3 +61,11 @@ void Circle::readFromConsole() {
     std::cout<<"Enter fill:";
     std::cin>>fill;
 }
+
+void Circle::setX(int horizontal) {
+    this->cx = this->cx + horizontal;
+}
+
+void Circle::setY(int vertical) {
+    this->cy = this->cy + vertical;
+}

@@ -10,6 +10,8 @@ public:
     virtual Shape * copy() = 0;
     virtual void print(std::ostream & out) = 0;
     virtual void write(std::ostream & out) = 0;
+    virtual void setX(int horizontal) = 0;
+    virtual void setY(int vertical) = 0;
     virtual ~Shape() = default;
 
     virtual void readFromConsole() = 0;

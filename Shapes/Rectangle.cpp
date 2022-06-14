@@ -70,3 +70,11 @@ void Rectangle::readFromConsole() {
     std::cout<<"Enter fill:";
     std::cin>>fill;
 }
+
+void Rectangle::setX(int horizontal) {
+    this->x = this->x + horizontal;
+}
+
+void Rectangle::setY(int vertical) {
+    this->y = this->y + vertical;
+}

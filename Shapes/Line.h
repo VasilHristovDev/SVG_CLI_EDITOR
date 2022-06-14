@@ -16,6 +16,8 @@ public:
     void read(SvgElement & element) override;
     void write(std::ostream & out) override;
     void print(std::ostream & out) override;
+    void setX(int horizontal) override;
+    void setY(int vertical) override;
     void readFromConsole() override;
 
     virtual Line * copy() override {

@@ -159,6 +159,8 @@ void SvgContainer::readFromConsole() {
         shape = new Rectangle;
         shape->readFromConsole();
         this->add(shape);
+        std::cout<<"Added: ";
+        shape->print(std::cout);
         return;
     }
 
@@ -167,6 +169,8 @@ void SvgContainer::readFromConsole() {
         shape = new Circle;
         shape->readFromConsole();
         this->add(shape);
+        std::cout<<"Added: ";
+        shape->print(std::cout);
         return;
     }
 
@@ -175,7 +179,26 @@ void SvgContainer::readFromConsole() {
         shape = new Line;
         shape->readFromConsole();
         this->add(shape);
+        std::cout<<"Added: ";
+        shape->print(std::cout);
         return;
     }
     std::cout<<CliHelperMessages::UNSUPPORTED_SVG_ELEMENT<<std::endl;
+}
+
+void SvgContainer::translate(int vertical, int horizontal, int index) {
+    if(index != -1)
+    {
+        this->shapes[index]->setX(horizontal);
+        this->shapes[index]->setY(vertical);
+        std::cout<<CliHelperMessages::SUCCESSFULLY_TRANSLATED_ELEMENT<<index<<")"<<std::endl;
+        return;
+    }
+
+    for (int i = 0; i < this->size ; ++i) {
+        this->shapes[i]->setX(horizontal);
+        this->shapes[i]->setY(vertical);
+    }
+    std::cout<<CliHelperMessages::SUCCESSFULLY_TRANSLATED_ALL<<std::endl;
+
 }

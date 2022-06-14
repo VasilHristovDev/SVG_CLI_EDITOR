@@ -27,7 +27,7 @@ private:
 public:
     CLI_Handler();
 
-    CLI_Handler(COMMANDS command,  const char * path = "/");
+    explicit CLI_Handler(COMMANDS command,  const char * path = "/");
     //action based commands
     void action();
     void handleOpen();
@@ -82,6 +82,9 @@ void CLI_Handler::action() {
             break;
         case ERASE:
             this->handleErase();
+            break;
+        case TRANSLATE:
+            this->handleTranslate();
             break;
         case UNKNOWN_COMMAND:
         default:
@@ -244,6 +247,10 @@ String stripCommand(String & command)
     {
         return command.strip(CliHelperMessages::ERASE);
     }
+    else if(command.contains(CliHelperMessages::TRANSLATE))
+    {
+        return command.strip(CliHelperMessages::TRANSLATE);
+    }
     return command.getText();
 }
 
@@ -303,6 +310,23 @@ void CLI_Handler::handleErase() {
     }
 }
 
+void CLI_Handler::handleTranslate() {
+    if (this->isFileOpen)
+    {
+        int vertical;
+        int horizontal;
+        std::cout<<"Enter vertical:";
+        std::cin>>vertical;
+        std::cout<<"Enter horizontal:";
+        std::cin>>horizontal;
+        int n = (int)attrValueToInt(this->path);
+        this->container.translate(vertical,horizontal, n);
+    }
+    else {
+        std::cout<<CliHelperMessages::NO_FILE_OPEN<<std::endl;
+    }
+}
+
 COMMANDS stringToCommand(String &string) {
     if (string.contains(CliHelperMessages::OPEN))
         return OPEN;
@@ -324,6 +348,8 @@ COMMANDS stringToCommand(String &string) {
         return PRINT;
     if(string.contains(CliHelperMessages::ERASE))
         return ERASE;
+    if(string.contains(CliHelperMessages::TRANSLATE))
+        return TRANSLATE;
 
     return UNKNOWN_COMMAND;
 }

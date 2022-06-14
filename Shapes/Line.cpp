@@ -72,3 +72,13 @@ void Line::readFromConsole() {
     std::cout<<"Enter stroke:";
     std::cin>>stroke;
 }
+
+void Line::setX(int horizontal) {
+    this->x1 = this->x1 + horizontal;
+    this->x2 = this->x2 + horizontal;
+}
+
+void Line::setY(int vertical) {
+    this->y1 = this->y1 + vertical;
+    this->y2 = this->y2 + vertical;
+}
