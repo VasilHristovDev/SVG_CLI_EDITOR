@@ -1,7 +1,7 @@
 # SVG_CLI_EDITOR
-Second project for FMI's Object Oriented Programming Course 2022
+## Second project for FMI's Object Oriented Programming Course 2022
 
-A console app where you can read SVG files.
+A console app where you can read, edit and create SVG files.
 
 ## Console App Features:
 1. Open an SVG file and store all its figures inside a container - **open "<path_to_file>**
@@ -9,6 +9,7 @@ A console app where you can read SVG files.
 3. Save an SVG file into its origin filename - **save**
 4. Save an SVG file into a new file - **save as <path_to_new_file>**
 5. Help command which lists all currently available commands - **help**
+6. Render an svg file to your default browser - **render <path_to_file>**
 
 ## SVG app features
 After you successfully open a correct format SVG file you are able to execute the following commands:
