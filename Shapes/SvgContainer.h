@@ -23,8 +23,6 @@ public:
 
     //Add a shape to the container
     void add(Shape * shape);
-    ///a method that extracts the index of an element inside the container
-    unsigned int getIndex(Shape &shape);
 
     ///a method that removes an element standing on a given index inside the container
     void remove(unsigned int index);
@@ -49,6 +47,12 @@ public:
 
     ///print all figures within an area
     void within(String & figure);
+
+    ///action with logic for getting all figures within a circle
+    void printFiguresWithinCircle(SvgContainer & container);
+
+    ///action with logic for getting figures within a rectangle
+    void printFiguresWithinRectangle(SvgContainer & container);
 
     ///an indexation operator that returns the element standing on the index inside of the container
     Shape *operator[](unsigned index);

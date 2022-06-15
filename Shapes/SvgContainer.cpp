@@ -29,16 +29,6 @@ void SvgContainer::remove(unsigned int index) {
     std::cout << CliHelperMessages::NO_ELEMENT_WITH_INDEX_WAS_FOUND << std::endl;
 }
 
-unsigned int SvgContainer::getIndex(Shape &shape) {
-//    std::cout<<size<<std::endl;
-//    for (int i = 0; i < this->size ; ++i) {
-//        if(*this->shapes[i] == shape)
-//            return i;
-//    }
-//    //TODO: Return error index const || Throw exception
-    return -1;
-}
-
 SvgContainer &SvgContainer::operator=(const SvgContainer &other) {
     if (this != &other) {
         for (int i = 0; i < this->cap; ++i) {
@@ -95,9 +85,8 @@ SvgContainer::SvgContainer(const SvgContainer &other) {
 
 void SvgContainer::readSvgElementsFromFile(SvgFile &file) {
     std::fstream reader(file.getFileName().getText(), std::ios::in);
-    class Rectangle tempRect;
-    class Circle tempCircle;
-    class Line tempLine;
+    Shape * shape;
+
     if (reader) {
         String line;
         while (!line.contains("<svg")) {
@@ -111,23 +100,23 @@ void SvgContainer::readSvgElementsFromFile(SvgFile &file) {
             SvgElement element;
             element.read(line.getText());
             if (element.getName().contains("rect")) {
-                tempRect.read(element);
-                this->add(&tempRect);
+                shape = new Rectangle;
+                shape->read(element);
                 reader >> line;
             } else if (element.getName().contains("circle")) {
-                tempCircle.read(element);
-                this->add(&tempCircle);
+                shape = new Circle;
+                shape->read(element);
                 reader >> line;
             } else if (element.getName().contains("line")) {
-                tempLine.read(element);
-                this->add(&tempLine);
+                shape = new Line;
+                shape->read(element);
                 reader >> line;
             }
+            this->add(shape);
         }
         std::cout << "Successfully read svg elements from file: " << file.getFileName() << std::endl;
         reader.close();
     }
-
 
 }
 
@@ -161,9 +150,9 @@ void SvgContainer::readFromConsole() {
         this->add(shape);
         std::cout<<"Added: ";
         shape->print(std::cout);
+        std::cout<<"("<<this->size<<")";
         return;
     }
-
     if(shapeType == "circle" || shapeType == "Circle")
     {
         shape = new Circle;
@@ -204,54 +193,59 @@ void SvgContainer::translate(int vertical, int horizontal, int index) {
 }
 void SvgContainer::within(String & figure)
 {
-    std::cout<<figure<<std::endl;
+    SvgContainer tempContainer;
     if(figure == "circle")
     {
-        int cx, cy, r;
-        std::cout<<"cx:";
-        std::cin>>cx;
-        std::cout<<"cy:";
-        std::cin>>cy;
-        std::cout<<"r:";
-        std::cin>>r;
-        SvgContainer tempContainer;
-        for (int i = 0; i < this->size ; ++i) {
-            if(this->shapes[i]->isWithinCircle(cx,cy,r))
-                tempContainer.add(this->shapes[i]);
-        }
-        if(tempContainer.getSize() > 0)
-        {
-            tempContainer.print();
-        }
-        else {
-            std::cout<<"No figures within circle "<<cx<<" "<<cy<<" "<<r<<std::endl;
-        }
+        this->printFiguresWithinCircle(tempContainer);
     }
     else if(figure == "rectangle")
     {
-        int x,y,width,height;
-        std::cout<<"x:";
-        std::cin>>x;
-        std::cout<<"y:";
-        std::cin>>y;
-        std::cout<<"width:";
-        std::cin>>width;
-        std::cout<<"height:";
-        std::cin>>height;
-
-        SvgContainer tempContainer;
-
-        for (int i = 0; i < size ; ++i) {
-            if(this->shapes[i]->isWithinRectangle(x,y,width,height))
-                tempContainer.add(this->shapes[i]);
-        }
-        if(tempContainer.getSize() > 0)
-        {
-            tempContainer.print();
-        }
-        else {
-            std::cout<<"No figures within rectangle "<<x<<" "<<y<<" "<<width<<" "<<height<<std::endl;
-        }
+        this->printFiguresWithinRectangle(tempContainer);
     }
     std::cin.ignore();
+}
+
+void SvgContainer::printFiguresWithinCircle(SvgContainer &container) {
+    int cx, cy, r;
+    std::cout<<"cx:";
+    std::cin>>cx;
+    std::cout<<"cy:";
+    std::cin>>cy;
+    std::cout<<"r:";
+    std::cin>>r;
+    for (int i = 0; i < this->size ; ++i) {
+        if(this->shapes[i]->isWithinCircle(cx,cy,r))
+            container.add(this->shapes[i]);
+    }
+    if(container.getSize() > 0)
+    {
+        container.print();
+    }
+    else {
+        std::cout<<"No figures within circle "<<cx<<" "<<cy<<" "<<r<<std::endl;
+    }
+}
+
+void SvgContainer::printFiguresWithinRectangle(SvgContainer &container) {
+    int x,y,width,height;
+    std::cout<<"x:";
+    std::cin>>x;
+    std::cout<<"y:";
+    std::cin>>y;
+    std::cout<<"width:";
+    std::cin>>width;
+    std::cout<<"height:";
+    std::cin>>height;
+
+    for (int i = 0; i < size ; ++i) {
+        if(this->shapes[i]->isWithinRectangle(x,y,width,height))
+            container.add(this->shapes[i]);
+    }
+    if(container.getSize() > 0)
+    {
+        container.print();
+    }
+    else {
+        std::cout<<"No figures within rectangle "<<x<<" "<<y<<" "<<width<<" "<<height<<std::endl;
+    }
 }
