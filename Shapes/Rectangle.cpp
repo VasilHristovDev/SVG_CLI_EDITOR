@@ -96,6 +96,21 @@ bool Rectangle::isWithinCircle(int cx, int cy, int r) {
 }
 
 bool Rectangle::isWithinRectangle(int _x, int _y, int _width, int _height) {
-    return (_x + width) < (this->x + this->width) && (this->x) > (_x) && (this->y) > (_y)
-           && (this->y + this->height) < (y + height);
+    Point A(this->x, this->y);
+    Point B(this->x + this->width, this->y);
+    Point C(this->x, this->y + height);
+    Point D(this->x + this->width, this->y + this->height);
+
+    Point A1(_x, _y);
+    Point B1(_x + _width, _y);
+    Point C1(_x, _y + _height);
+    Point D1(_x + _width, _y + _height);
+
+    Point pointArr[] = {A,B,C,D};
+
+    for (int i = 0; i < 4 ; ++i) {
+        if(!(pointArr[i].x > A1.x && pointArr[i].x < B1.x && pointArr[i].y > A1.y && pointArr[i].y < C1.y))
+            return false;
+    }
+    return true;
 }

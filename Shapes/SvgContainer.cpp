@@ -253,4 +253,5 @@ void SvgContainer::within(String & figure)
             std::cout<<"No figures within rectangle "<<x<<" "<<y<<" "<<width<<" "<<height<<std::endl;
         }
     }
+    std::cin.ignore();
 }
