@@ -2,6 +2,7 @@
 #define SVG_CLI_EDITOR_FILEHELPERMESSAGES_H
 #include "../misc/String.h"
 
+//TODO: Split Messages into three files - CliHelper, SvgHelper, FileHelper
 class FileHelperMessages {
 public:
     //incorrect format

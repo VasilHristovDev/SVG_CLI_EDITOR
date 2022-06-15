@@ -3,11 +3,10 @@
 #include "String.h"
 #include <cmath>
 
+//TODO: Add an argument structure, which reads a value from a console line
 struct Attribute {
     String key;
     String value;
-
-
 };
 double attrValueToInt(String & value)
 {

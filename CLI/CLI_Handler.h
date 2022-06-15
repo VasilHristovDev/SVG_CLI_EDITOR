@@ -15,7 +15,7 @@ enum COMMANDS {
     PRINT, CREATE, ERASE, TRANSLATE, WITHIN
 };
 
-
+//TODO: Split header into cpp and header file
 class CLI_Handler {
 private:
     SvgContainer container;
@@ -170,7 +170,7 @@ void CLI_Handler::handleClose() {
         this->isFileOpen = false;
     }
     else{
-        std::cout<<CliHelperMessages::NO_FILE_OPEN<<std::endl;
+        this->handleNoFileIsOpen();
     }
 }
 
@@ -188,7 +188,8 @@ void CLI_Handler::handleSave() {
         }
     }
     else{
-        std::cout<<CliHelperMessages::NO_FILE_OPEN<<std::endl;
+        this->handleNoFileIsOpen();
+        return;
     }
     this->isFileOpen = false;
     this->hasUnsavedChanges = false;
@@ -220,7 +221,7 @@ void CLI_Handler::handleSaveAs() {
 
     }
     else{
-        std::cout<<CliHelperMessages::NO_FILE_OPEN<<std::endl;
+        this->handleNoFileIsOpen();
     }
 }
 
@@ -298,6 +299,7 @@ void CLI_Handler::handlePrint() {
 }
 
 void CLI_Handler::handleNoFileIsOpen() {
+    std::cout<<CliHelperMessages::NO_FILE_OPEN<<std::endl;
     std::cout<<CliHelperMessages::UNAVAILABLE_COMMAND<<std::endl;
 }
 
@@ -305,7 +307,9 @@ void CLI_Handler::handleCreate() {
     if(this->isFileOpen)
     {
         this->container.readFromConsole();
-        return;
+    }
+    else {
+        this->handleNoFileIsOpen();
     }
 }
 
@@ -314,6 +318,10 @@ void CLI_Handler::handleErase() {
     {
         this->container.remove((int)attrValueToInt(this->path));
         this->hasUnsavedChanges = true;
+    }
+    else
+    {
+        this->handleNoFileIsOpen();
     }
 }
 
@@ -330,12 +338,19 @@ void CLI_Handler::handleTranslate() {
         this->container.translate(vertical,horizontal, n);
     }
     else {
-        std::cout<<CliHelperMessages::NO_FILE_OPEN<<std::endl;
+        this->handleNoFileIsOpen();
     }
 }
 
 void CLI_Handler::handleWithin() {
-    this->container.within(this->path);
+    if(this->isFileOpen)
+    {
+        this->container.within(this->path);
+    }
+    else
+    {
+        this->handleNoFileIsOpen();
+    }
 }
 
 COMMANDS stringToCommand(String &string) {
