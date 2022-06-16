@@ -56,13 +56,14 @@ bool SvgFile::markupTagCorrect(String &line) const{
 
         if(lineToCheck[currentChar] != ' ' && lineToCheck[currentChar] != '\n' && lineToCheck[currentChar] != '\r')
         {
-            std::cout<<(int)lineToCheck[currentChar]<<std::endl;
             nothingAfterClosingTag = false;
         }
     }
     if(!(closingTag && openingTag && nothingAfterClosingTag))
     {
-        std::cout<<"Found error at line:"<<std::endl;
+        std::cout<<FileHelperMessages::ERROR_IN_FILE<<std::endl;
+        std::cout<<this->fileName<<std::endl;
+        std::cout<<FileHelperMessages::ERROR_AT_LINE<<std::endl;
         std::cout<<lineToCheck<<std::endl;
     }
     delete [] lineToCheck;

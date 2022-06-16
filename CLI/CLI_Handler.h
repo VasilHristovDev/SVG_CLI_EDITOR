@@ -2,8 +2,14 @@
 #define SVG_CLI_EDITOR_CLI_HANDLER_H
 
 #include <iostream>
-//#include <windows.h>
-#include <unistd.h>
+
+#ifdef _WIN32
+#define WINDOWS
+#elifdef __linux__
+#define UNIX
+#elifdef __APPLE__
+#define APPLE
+#endif
 
 #include "CliHelperMessages.h"
 #include "../Files/File.cpp"
@@ -26,23 +32,36 @@ private:
 public:
     CLI_Handler();
 
-    explicit CLI_Handler(COMMANDS command,  const char * path = "/");
+    explicit CLI_Handler(COMMANDS command, const char *path = "/");
+
     //action based commands
     void action();
+
     void handleOpen();
+
     void handleClose();
+
     void handleSave();
+
     void handleSaveAs();
+
     void handleHelp();
+
     void handleRender();
+
     void handleExit();
 
     //svg file commands
     void handleCreate();
+
     void handlePrint();
+
     void handleErase();
+
     void handleTranslate();
+
     void handleWithin();
+
     void handleNoFileIsOpen();
 
     void setCommand(COMMANDS commands);
