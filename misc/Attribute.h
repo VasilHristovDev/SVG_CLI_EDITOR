@@ -4,12 +4,17 @@
 #include <cmath>
 
 //TODO: Add an argument structure, which reads a value from a console line
+
+const int ERROR_INDEX = -1;
 struct Attribute {
     String key;
     String value;
 };
 double attrValueToInt(String & value)
 {
+    if(value == "")
+        return ERROR_INDEX;
+
     unsigned int size = value.getSize();
 
     double returnable = 0;

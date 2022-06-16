@@ -16,6 +16,7 @@ private:
     int size;
     int cap;
     void clean();
+    void resize();
 public:
     SvgContainer();
     explicit SvgContainer(int cap);

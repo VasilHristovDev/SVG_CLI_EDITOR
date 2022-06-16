@@ -67,28 +67,36 @@ void CLI_Handler::setPath(String &string) {
 }
 
 void CLI_Handler::handleOpen() {
-    if(this->path == "")
+    if(!this->isFileOpen)
     {
-        std::cerr<<CliHelperMessages::NO_PATH_PROVIDED<<std::endl;
-        return;
-    }
-    if(File::exists(this->path.getText()))
-    {
-        this->currentOpenFile.setFileName(this->path.getText());
-        if(this->currentOpenFile.isCorrectFormat())
+        if(this->path == "")
         {
-            this->isFileOpen = true;
-            this->container.readSvgElementsFromFile(this->currentOpenFile);
+            std::cerr<<CliHelperMessages::NO_PATH_PROVIDED<<std::endl;
+            return;
         }
-        else
+        if(File::exists(this->path.getText()))
         {
-            std::cout<<CliHelperMessages::FILE_NOT_IN_CORRECT_FORMAT<<std::endl;
-        }
+            this->currentOpenFile.setFileName(this->path.getText());
+            if(this->currentOpenFile.isCorrectFormat())
+            {
+                this->isFileOpen = true;
+                this->container.readSvgElementsFromFile(this->currentOpenFile);
+                return;
+            }
+            else
+            {
+                std::cout<<CliHelperMessages::FILE_NOT_IN_CORRECT_FORMAT<<std::endl;
+                return;
+            }
 
+        }
+        else {
+            std::cout<<CliHelperMessages::FILE_PATH_DOES_NOT_EXIST<<std::endl;
+            return;
+        }
     }
-    else {
-        std::cout<<CliHelperMessages::FILE_PATH_DOES_NOT_EXIST<<std::endl;
-    }
+    std::cout<<"There is currently open file!\nFile:"<<this->currentOpenFile.getFileName()<<std::endl;
+
 }
 
 void CLI_Handler::handleRender() {
@@ -256,6 +264,7 @@ void CLI_Handler::handleCreate() {
     if(this->isFileOpen)
     {
         this->container.readFromConsole();
+        this->hasUnsavedChanges = true;
     }
     else {
         this->handleNoFileIsOpen();
@@ -283,8 +292,10 @@ void CLI_Handler::handleTranslate() {
         std::cin>>vertical;
         std::cout<<"Enter horizontal:";
         std::cin>>horizontal;
+        std::cin.ignore();
         int n = (int)attrValueToInt(this->path);
         this->container.translate(vertical,horizontal, n);
+        this->hasUnsavedChanges = true;
     }
     else {
         this->handleNoFileIsOpen();

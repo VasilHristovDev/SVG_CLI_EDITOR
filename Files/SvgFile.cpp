@@ -37,6 +37,8 @@ bool SvgFile::isCorrectFormat()  {
 }
 
 bool SvgFile::markupTagCorrect(String &line) const{
+    if(line.contains("<!--") && line.contains("-->"))
+        return true;
     char * lineToCheck = new char [line.getSize() + 1];
     strcpy(lineToCheck, line.getText());
     int currentChar = 0;
@@ -72,15 +74,27 @@ bool SvgFile::markupTagCorrectSvgElement(String &line) const {
     {
         if(line.contains("rect"))
         {
-            return line.contains("x=") && line.contains("y=") && line.contains("width=") && line.contains("height=") && line.contains("fill=");
+            for (int i = 0; i <5 ; ++i) {
+                if(!line.contains(Rectangle::props[i] + "="))
+                    return false;
+            }
+            return true;
         }
         if(line.contains("circle"))
         {
-            return line.contains("cx=") && line.contains("cy=") && line.contains("r=") && line.contains("fill=");
+            for (int i = 0; i <4 ; ++i) {
+                if(!line.contains(Circle::props[i] + "="))
+                    return false;
+            }
+            return true;
         }
         if(line.contains("line"))
         {
-            return line.contains("x1=") && line.contains("y1=") && line.contains("x2=") && line.contains("y2=") && line.contains("stroke=");
+            for (int i = 0; i < 5 ; ++i) {
+                if(!line.contains(Line::props[i] + "="))
+                    return false;
+            }
+            return true;
         }
         std::cerr<<FileHelperMessages::UNSUPPORTED_SHAPE_MESSAGE<<std::endl;
         return false;

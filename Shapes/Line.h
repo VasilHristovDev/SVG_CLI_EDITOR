@@ -22,11 +22,13 @@ public:
     bool isWithinRectangle(int x, int y, int width, int height) override;
     void readFromConsole() override;
 
+    static String props[];
     virtual Line * copy() override {
         return new Line(*this);
     }
      ~Line() override = default;
 };
 
+String Line::props[] = {"x1", "y1", "x2", "y2", "stroke"};
 
 #endif //SVG_CLI_EDITOR_LINE_H

@@ -21,12 +21,14 @@ public:
     bool isWithinRectangle(int x, int y, int width, int height) override;
 
     void readFromConsole() override;
-
+    static String props[];
     virtual Circle * copy() override {
         return new Circle(*this);
     };
    virtual ~Circle() = default;
 };
+
+String Circle::props[] = {"cx","cy","r","fill"};
 
 
 #endif //SVG_CLI_EDITOR_CIRCLE_H

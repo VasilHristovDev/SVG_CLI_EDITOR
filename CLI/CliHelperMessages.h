@@ -77,14 +77,15 @@ const char * CliHelperMessages::CLI_COMMANDS = "\nList of available commands for
 
 const char * CliHelperMessages::UNKNOWN_COMMAND_USED = "Unknown command was used!\nPlease write help to see a list of all supported commands!";
 
-const char * CliHelperMessages::SVG_COMMANDS = "\n List of available commands for the SVG files \n"
+const char * CliHelperMessages::SVG_COMMANDS = "\nList of available commands for the SVG files\n"
                                                "(only available after you successfully open an svg file with the 'open' command)\n"
-                                               "print                          prints all currently available figures\n"
-                                               "create                        creates a new figure by a given input\n"
-                                               "erase <n>                        erases a figure from the container with index 'n'\n"
-                                               "translate [<n>] --vertical=<y_pixels> --horizontal=<x_pixels> \n"
-                                               "Translates figure with index n or all figures by <x_pixels> horizontally and with <y_pixels> vertically\n"
-                                               "within <option> [list of coordinates]           lists all figures within a given area. <option> may be a circle or a rectangle\n"
+                                               "print                               prints all currently available figures\n"
+                                               "create                              creates a new figure by a given input\n"
+                                               "erase <n>                           erases a figure from the container with index 'n'\n"
+                                               "translate [<n>]                     translates figure with index n or all figures by <x_pixels> horizontally\n"
+                                               "                                    and with <y_pixels> vertically.\n"
+                                               "within <option>                     lists all figures within a given area.\n"
+                                               "                                    <option> may be a circle or a rectangle\n\n"
                                                "For rectangle you must provide starting coordinates <x> <y> <width> <height>\n"
                                                "For circle you must provide <cx> <cy> <r>\n";
 

@@ -2,7 +2,16 @@
 #define SVG_CLI_EDITOR_SVGFILE_H
 
 #include "File.h"
+#include "../Shapes/Rectangle.h"
+#include "../Shapes/Circle.h"
+#include "../Shapes/Line.h"
 
+String SUPPORTED_FIGURES[] = {
+        "rect",
+        "circle",
+        "line"
+};
+const int NUMBER_SUPPORTED_FIGURES = 3;
 class SvgFile: public File {
 public:
     SvgFile():File(){};
@@ -12,8 +21,7 @@ public:
     bool markupTagCorrectSvgElement(String & line) const;
     bool hasCorrectExtension() override;
 
-
-
+    bool checkAttributes(String &string, String & string1) const;
 };
 
 

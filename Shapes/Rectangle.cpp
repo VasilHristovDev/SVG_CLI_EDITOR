@@ -104,7 +104,6 @@ bool Rectangle::isWithinRectangle(int _x, int _y, int _width, int _height) {
     Point A1(_x, _y);
     Point B1(_x + _width, _y);
     Point C1(_x, _y + _height);
-    Point D1(_x + _width, _y + _height);
 
     Point pointArr[] = {A,B,C,D};
 

@@ -23,11 +23,12 @@ public:
     bool isWithinRectangle(int x, int y, int width, int height) override;
 
     void readFromConsole();
+    static String props[];
     virtual Rectangle * copy() override{
         return new Rectangle(*this);
     };
     virtual ~Rectangle() = default;
 };
-
+String Rectangle::props[] = {"x","y","width","height","fill"};
 
 #endif //SVG_CLI_EDITOR_RECTANGLE_H

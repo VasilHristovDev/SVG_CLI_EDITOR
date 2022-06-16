@@ -59,6 +59,8 @@ SvgContainer::SvgContainer() {
 }
 
 void SvgContainer::add(Shape *shape) {
+    if(this->size + 1 > this->cap)
+        this->resize();
     this->shapes[size++] = shape->copy();
 }
 
@@ -94,6 +96,10 @@ void SvgContainer::readSvgElementsFromFile(SvgFile &file) {
         }
         while (!line.contains("</svg") && !reader.eof()) {
             reader >> line;
+            if(line.contains("<!--"))
+            {
+                reader>>line;
+            }
             if (reader.eof())
                 break;
             reader.seekg(((int) reader.tellg() - line.getSize()), std::ios::beg);
@@ -145,7 +151,7 @@ void SvgContainer::readFromConsole() {
     Shape * shape;
     if(shapeType=="rectangle" || shapeType == "Rectangle")
     {
-        shape = new Rectangle;
+        shape = new class Rectangle;
         shape->readFromConsole();
         this->add(shape);
         std::cout<<"Added: ";
@@ -248,4 +254,15 @@ void SvgContainer::printFiguresWithinRectangle(SvgContainer &container) {
     else {
         std::cout<<"No figures within rectangle "<<x<<" "<<y<<" "<<width<<" "<<height<<std::endl;
     }
+}
+
+void SvgContainer::resize() {
+    this->cap = 2 * this->cap;
+    Shape ** newShapes = new Shape*[this->cap];
+    for (int i = 0; i < this->size ; ++i) {
+        newShapes[i] = this->shapes[i]->copy();
+    }
+    this->clean();
+    this->shapes = newShapes;
+
 }
