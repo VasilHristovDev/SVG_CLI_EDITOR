@@ -2,19 +2,20 @@
 #define SVG_CLI_EDITOR_HELPER_MESSAGES_H
 #include "../misc/String.cpp"
 
+///Class with static helper messages for the CLI actions
 class CliHelperMessages {
 public:
-    //opening file helper messages
+    ///opening file helper messages
     static const char * FILE_OPENED_MESSAGE;
     static const char * FILE_OPEN_ERROR_MESSAGE;
     static const char * FILE_PATH_DOES_NOT_EXIST;
     static const char * FILE_NOT_IN_CORRECT_FORMAT;
 
-    //close file helper messages
+    ///close file helper messages
     static const char * SAVE_CHANGES_TO_FILE;
     static const char * UNSAVED_CHANGES;
 
-    //cli commands
+    ///cli commands
     static const char * OPEN;
     static const char * CLOSE;
     static const char * SAVE;
@@ -29,17 +30,17 @@ public:
     static const char * WITHIN;
     static const char * UNKNOWN_COMMAND_USED;
 
-    //cli commands
+    ///cli commands
     static const char * CLI_COMMANDS;
 
     //svg commands
     static const char * SVG_COMMANDS;
 
-    //
+    ///Action error messages
     static const char * NO_FILE_OPEN;
     static const char * NO_PATH_PROVIDED;
 
-    //svg commands helper messages
+    ///svg commands helper messages
     static const char * UNAVAILABLE_COMMAND;
     static const char * ERASED_SUCCESSFULLY;
     static const char * NO_ELEMENT_WITH_INDEX_WAS_FOUND;

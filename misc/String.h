@@ -35,7 +35,10 @@ public:
 
     ///Operator for string concatenation
     String operator+(const String &other);
+
+    ///A function that strips a given string by another and returns the stripped one
     String strip(const String & other);
+
     ///Operator for comparison between two strings
     bool operator == (const String & other);
 

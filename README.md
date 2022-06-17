@@ -36,20 +36,20 @@ Here is a tutorial step by step.
 Let's say that you want to add **ellipse** figure to the supported figures.
 1. Create a class called **Ellipse** in the "/shapes" directory
 2. You must implement all virtual methods from the base class
-`
-   + virtual Shape * copy() = 0;
-   + virtual void read(SvgElement & element) = 0;
-   + virtual void print(std::ostream & out) = 0;
-   + virtual void write(std::ostream & out) = 0;
-   + virtual void setX(int horizontal) = 0;
-   + virtual void setY(int vertical) = 0;
-   + virtual bool isWithinCircle(int cx, int cy, int r) = 0;
-   + virtual bool isWithinRectangle(int x, int y, int width, int height) = 0;
-   + virtual ~Shape() = default;
-   + virtual void readFromConsole() = 0;
-`
-3. After that in Ellipse.cpp add a **static String props[]** array as a public property and list all   allowed attributes an **`<ellipse>`** must have (cx, cy, rx, ry, fill) 
-4. Add this to the **SvgFile::markupTagCorrectSvgElement(String &line)** method:  
+**
+  + virtual Shape * copy();
+  + virtual void read(SvgElement & element);
+  + virtual void print(std::ostream & out);
+  + virtual void write(std::ostream & out);
+  + virtual void setX(int horizontal);
+  + virtual void setY(int vertical);
+  + virtual bool isWithinCircle(int cx, int cy, int r);
+  + virtual bool isWithinRectangle(int x, int y, int width, int height);
+  + virtual ~Shape();
+  + virtual void readFromConsole();
+**
+4. After that in Ellipse.cpp add a **static String props[]** array as a public property and list all   allowed attributes an **`<ellipse>`** must have (cx, cy, rx, ry, fill) 
+5. Add this to the **SvgFile::markupTagCorrectSvgElement(String &line)** method:  
    if(line.contains("ellipse"))\
    {\
       for (int i = 0; i < 5 ; ++i) {\
@@ -58,8 +58,8 @@ Let's say that you want to add **ellipse** figure to the supported figures.
       }\
     return true;\
    }
-5. Then in **SvgContainer::readFromConsole()** add the corresponding logic for the new figure
-6. And last add corresponding logic in **SvgContainer::readSvgElementsFromFile(SvgFile &file)** for the new figure
+6. Then in **SvgContainer::readFromConsole()** add the corresponding logic for the new figure
+7. And last add corresponding logic in **SvgContainer::readSvgElementsFromFile(SvgFile &file)** for the new figure
 
 ## Bugs found:
 Done some testing while working on the project and found these bugs:

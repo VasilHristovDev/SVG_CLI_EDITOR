@@ -42,13 +42,13 @@ void Line::read(SvgElement & element) {
     int count = element.getAttrCount();
     for (int i = 0; i < count ; ++i) {
         if(attributes[i].key.contains("x1"))
-            this->x1 = (int)attrValueToInt(attributes[i].value);
+            this->x1 = (int) attrValueToDouble(attributes[i].value);
         else if(attributes[i].key.contains("y1"))
-            this->y1 = (int)attrValueToInt(attributes[i].value);
+            this->y1 = (int) attrValueToDouble(attributes[i].value);
         else if(attributes[i].key.contains("x2"))
-            this->x2 = (int)attrValueToInt(attributes[i].value);
+            this->x2 = (int) attrValueToDouble(attributes[i].value);
         else if(attributes[i].key.contains("y2"))
-            this->y2 = (int)attrValueToInt(attributes[i].value);
+            this->y2 = (int) attrValueToDouble(attributes[i].value);
         else if(attributes[i].key.contains("stroke"))
             this->stroke = attributes[i].value;
     }

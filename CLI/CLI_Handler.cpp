@@ -102,12 +102,9 @@ void CLI_Handler::handleRender() {
         SvgFile file(this->path.getText());
         if (file.isCorrectFormat()) {
             #ifdef WINDOWS
-                        system(((String)"start " + this->path + " --display=PROGRAM").getText());
-            #elifdef UNIX
-                        system(((String) "xdg-open " + this->path + "--display=PROGRAM").getText());
-            #elifdef APPLE
-                        system(((String)"open " + this->path).getText());
+               ShellExecute(NULL, "open", this->path.getText(), NULL, NULL, SW_SHOWNORMAL);
             #endif
+
             return;
         }
         std::cerr << CliHelperMessages::FILE_NOT_IN_CORRECT_FORMAT << std::endl;
@@ -246,7 +243,7 @@ void CLI_Handler::handleCreate() {
 
 void CLI_Handler::handleErase() {
     if (!(this->path == "") && this->isFileOpen) {
-        this->container.remove((int) attrValueToInt(this->path));
+        this->container.remove((int) attrValueToDouble(this->path));
         this->hasUnsavedChanges = true;
     } else {
         this->handleNoFileIsOpen();
@@ -262,7 +259,7 @@ void CLI_Handler::handleTranslate() {
         std::cout << "Enter horizontal:";
         std::cin >> horizontal;
         std::cin.ignore();
-        int n = (int) attrValueToInt(this->path);
+        int n = (int) attrValueToDouble(this->path);
         this->container.translate(vertical, horizontal, n);
         this->hasUnsavedChanges = true;
     } else {

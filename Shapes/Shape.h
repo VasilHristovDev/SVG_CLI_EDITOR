@@ -3,6 +3,7 @@
 #include <fstream>
 #include "../misc/SvgElement.h"
 
+///Interface with pure virtual methods only
 class Shape {
 public:
     virtual Shape * copy() = 0;

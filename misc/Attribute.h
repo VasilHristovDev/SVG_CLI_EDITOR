@@ -3,14 +3,15 @@
 #include "String.h"
 #include <cmath>
 
-//TODO: Add an argument structure, which reads a value from a console line
-
 const int ERROR_INDEX = -1;
+///Attribute structure implementing a String pair key: value
 struct Attribute {
     String key;
     String value;
 };
-double attrValueToInt(String & value)
+
+///Method that gets the attribute value as a string and returns its double value
+double attrValueToDouble(String & value)
 {
     if(value == "")
         return ERROR_INDEX;
@@ -25,8 +26,6 @@ double attrValueToInt(String & value)
     }
 
     return returnable;
-
-
 }
 
 

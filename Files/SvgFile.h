@@ -6,22 +6,26 @@
 #include "../Shapes/Circle.h"
 #include "../Shapes/Line.h"
 
-String SUPPORTED_FIGURES[] = {
-        "rect",
-        "circle",
-        "line"
-};
-const int NUMBER_SUPPORTED_FIGURES = 3;
+///A derivative of File class handling especially svg files
 class SvgFile: public File {
 public:
+    ///Default constructor calling File default constructor
     SvgFile():File(){};
-    explicit SvgFile(const char * fileName): File(fileName){};
-    bool isCorrectFormat() override;
-    bool markupTagCorrect(String& line) const;
-    bool markupTagCorrectSvgElement(String & line) const;
-    bool hasCorrectExtension() override;
 
-    bool checkAttributes(String &string, String & string1) const;
+    ///Single param constructor constructing only fileName property
+    explicit SvgFile(const char * fileName): File(fileName){};
+
+    ///Applied polymorphic method that checks if a svg file is correctly formatted
+    bool isCorrectFormat() override;
+
+    ///Checker for a single markupTag (whether is correctly formatted)
+    bool markupTagCorrect(String& line) const;
+
+    ///Checker for a single svg markup tag (if the figure is in the list of supported figures etc.)
+    bool markupTagCorrectSvgElement(String & line) const;
+
+    ///Checks whether the open file has .svg extension
+    bool hasCorrectExtension() override;
 };
 
 

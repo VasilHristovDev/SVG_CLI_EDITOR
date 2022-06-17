@@ -1,15 +1,16 @@
 #ifndef SVG_CLI_EDITOR_FILEHELPERMESSAGES_H
 #define SVG_CLI_EDITOR_FILEHELPERMESSAGES_H
 
+///Class containing static file helper messages
 class FileHelperMessages {
 public:
-    //incorrect format
+    ///incorrect format
     static const char * UNSUPPORTED_FILE_FORMAT;
     static const char * INCORRECT_FILE_FORMAT_MESSAGE;
     static const char * INCORRECT_SVG_MARKUP_MESSAGE;
     static const char * UNSUPPORTED_SHAPE_MESSAGE;
 
-    //Error messages
+    ///Error messages
     static const char * ERROR_AT_LINE;
     static const char * ERROR_IN_FILE;
 };

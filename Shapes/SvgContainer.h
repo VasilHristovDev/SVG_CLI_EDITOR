@@ -9,17 +9,27 @@
 
 const int DEFAULT_CAP = 10;
 
-
+///A vector class implemented specially for the svgElements
+///Consisting of an array with shapes pointers, size, capacity
 class SvgContainer {
 private:
     Shape ** shapes;
     int size;
     int cap;
+
+    ///method that cleans all dynamically allocated memory inside the class
     void clean();
+
+    ///A method that resizes the capacity of the container when the previous capacity was reached
     void resize();
 public:
+    ///Default constructor
     SvgContainer();
+
+    ///Single param constructor
     explicit SvgContainer(int cap);
+
+    ///copy constructor
     SvgContainer(const SvgContainer & other);
 
     //Add a shape to the container

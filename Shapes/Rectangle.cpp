@@ -41,13 +41,13 @@ void Rectangle::read(SvgElement & element) {
     int count = element.getAttrCount();
     for (int i = 0; i < count ; ++i) {
         if(attributes[i].key == "x")
-            this->x = (int)attrValueToInt(attributes[i].value);
+            this->x = (int) attrValueToDouble(attributes[i].value);
         else if(attributes[i].key == "y")
-            this->y = (int)attrValueToInt(attributes[i].value);
+            this->y = (int) attrValueToDouble(attributes[i].value);
         else if(attributes[i].key.contains("width"))
-            this->width = (int)attrValueToInt(attributes[i].value);
+            this->width = (int) attrValueToDouble(attributes[i].value);
         else if(attributes[i].key.contains("height"))
-            this->height = (int)attrValueToInt(attributes[i].value);
+            this->height = (int) attrValueToDouble(attributes[i].value);
         else if(attributes[i].key.contains("fill"))
             this->fill = attributes[i].value;
     }
