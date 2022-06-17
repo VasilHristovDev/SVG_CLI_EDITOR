@@ -36,7 +36,9 @@ String String::operator+(const String &other) {
     char * returnable = new char[this->size + other.getSize() + 1];
     strcpy(returnable, this->text);
     strcat(returnable,other.getText());
-    return (String)returnable;
+    String returnableString = returnable;
+    delete [] returnable;
+    return returnableString;
 }
 //method that deletes the memory of the text
 void String::deallocateMemory() {

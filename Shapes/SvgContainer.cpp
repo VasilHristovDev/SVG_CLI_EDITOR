@@ -119,6 +119,7 @@ void SvgContainer::readSvgElementsFromFile(SvgFile &file) {
                 reader >> line;
             }
             this->add(shape);
+            delete shape;
         }
         std::cout << "Successfully read svg elements from file: " << file.getFileName() << std::endl;
         reader.close();
@@ -157,6 +158,7 @@ void SvgContainer::readFromConsole() {
         std::cout<<"Added: ";
         shape->print(std::cout);
         std::cout<<"("<<this->size<<")";
+        delete shape;
         return;
     }
     if(shapeType == "circle" || shapeType == "Circle")
@@ -166,6 +168,7 @@ void SvgContainer::readFromConsole() {
         this->add(shape);
         std::cout<<"Added: ";
         shape->print(std::cout);
+        delete shape;
         return;
     }
     if(shapeType == "line" || shapeType == "Line")
@@ -175,6 +178,7 @@ void SvgContainer::readFromConsole() {
         this->add(shape);
         std::cout<<"Added: ";
         shape->print(std::cout);
+        delete shape;
         return;
     }
     std::cout<<CliHelperMessages::UNSUPPORTED_SVG_ELEMENT<<std::endl;
