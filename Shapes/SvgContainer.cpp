@@ -151,7 +151,7 @@ void SvgContainer::readFromConsole() {
     Shape * shape;
     if(shapeType=="rectangle" || shapeType == "Rectangle")
     {
-        shape = new class Rectangle;
+        shape = new Rectangle;
         shape->readFromConsole();
         this->add(shape);
         std::cout<<"Added: ";
@@ -168,7 +168,6 @@ void SvgContainer::readFromConsole() {
         shape->print(std::cout);
         return;
     }
-
     if(shapeType == "line" || shapeType == "Line")
     {
         shape = new Line;

@@ -151,9 +151,15 @@ void CLI_Handler::handleSaveAs() {
             std::cerr << CliHelperMessages::NO_PATH_PROVIDED << std::endl;
             return;
         }
-        if (!File::exists(this->path.getText())) {
+        if (!SvgFile::exists(this->path.getText())) {
+            SvgFile file(this->path.getText());
+            if(!file.hasCorrectExtension())
+            {
+                std::cerr<<CliHelperMessages::FILE_NOT_IN_CORRECT_FORMAT<<std::endl;
+                return;
+            }
             std::ofstream out;
-            out.open(this->path.getText());
+            out.open(file.getFileName().getText());
             if (out) {
                 this->container.write(out);
                 out.close();

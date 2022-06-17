@@ -75,7 +75,7 @@ bool SvgFile::markupTagCorrectSvgElement(String &line) const {
     {
         if(line.contains("rect"))
         {
-            for (int i = 0; i <5 ; ++i) {
+            for (int i = 0; i < 5 ; ++i) {
                 if(!line.contains(Rectangle::props[i] + "="))
                     return false;
             }
@@ -83,7 +83,7 @@ bool SvgFile::markupTagCorrectSvgElement(String &line) const {
         }
         if(line.contains("circle"))
         {
-            for (int i = 0; i <4 ; ++i) {
+            for (int i = 0; i < 4 ; ++i) {
                 if(!line.contains(Circle::props[i] + "="))
                     return false;
             }
