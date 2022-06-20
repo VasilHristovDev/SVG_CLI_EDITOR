@@ -30,9 +30,9 @@ After you successfully open a correct format SVG file you are able to execute th
 
 ## Currently supported figures
 Here is a list of all currently supported figures
-1. **Rectangle** - consisting of **x, y, width, height and fill**\
-2. **Circle** - consisting of **cx, cy, r and fill**\
-3. **Line** - consisting of **x1, y1, x2, y2 and stroke**\
+1. **Rectangle** - consisting of **x, y, width, height and fill**
+2. **Circle** - consisting of **cx, cy, r and fill**
+3. **Line** - consisting of **x1, y1, x2, y2 and stroke**
 
 
 ## Add a new figure to the project
@@ -40,6 +40,7 @@ Here is a tutorial step by step.
 Let's say that you want to add **ellipse** figure to the supported figures.
 1. Create a class called **Ellipse** in the "/shapes" directory
 2. You must implement all virtual methods from the base class
+
 **
   + virtual Shape * copy();
   + virtual void read(SvgElement & element);
