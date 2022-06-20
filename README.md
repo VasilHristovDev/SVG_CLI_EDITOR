@@ -18,13 +18,13 @@ A console app where you can read, edit and create SVG files.
 ## SVG app features
 After you successfully open a correct format SVG file you are able to execute the following commands:
 
-1. Print all figures inside the svg container - **print**\
-2. Create a new figure by given input - **create**\
+1. Print all figures inside the svg container - **print**
+2. Create a new figure by given input - **create**
     > You will be asked what kind of figure you are willing to add to the container. Then you will have to give input for all its properties.
-3. Erase a figure by given index - **erase <given_index>**\
-4. Translate a figure by given index(optional) by given units vertically and horizontally - **translate [<given_index>]**\
-    > you will be asked for **horizontal units** input and **vertical units** input after you execute the command.\
-5. List all figures within a given area which can be either a circle or rectangle - **within <chosen_figure>**\
+3. Erase a figure by given index - **erase <given_index>**
+4. Translate a figure by given index(optional) by given units vertically and horizontally - **translate [<given_index>]**
+    > you will be asked for **horizontal units** input and **vertical units** input after you execute the command.
+5. List all figures within a given area which can be either a circle or rectangle - **within <chosen_figure>**
     > You will be asked for either **circle properties** input or **rectangle properties** input after you execute the command.
 
 
@@ -40,8 +40,6 @@ Here is a tutorial step by step.
 Let's say that you want to add **ellipse** figure to the supported figures.
 1. Create a class called **Ellipse** in the "/shapes" directory
 2. You must implement all virtual methods from the base class
-
-**
   + virtual Shape * copy();
   + virtual void read(SvgElement & element);
   + virtual void print(std::ostream & out);
@@ -52,7 +50,6 @@ Let's say that you want to add **ellipse** figure to the supported figures.
   + virtual bool isWithinRectangle(int x, int y, int width, int height);
   + virtual ~Shape();
   + virtual void readFromConsole();
-**
 4. After that in Ellipse.cpp add a **static String props[]** array as a public property and list all   allowed attributes an **`<ellipse>`** must have (cx, cy, rx, ry, fill) 
 5. Add this to the **SvgFile::markupTagCorrectSvgElement(String &line)** method:  
    if(line.contains("ellipse"))\
