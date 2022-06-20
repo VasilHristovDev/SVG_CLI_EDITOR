@@ -72,8 +72,8 @@ void CLI_Handler::handleOpen() {
             std::cerr << CliHelperMessages::NO_PATH_PROVIDED << std::endl;
             return;
         }
-        if (File::exists(this->path.getText())) {
-            this->currentOpenFile.setFileName(this->path.getText());
+        this->currentOpenFile.setFileName(this->path.getText());
+        if (File::exists(this->currentOpenFile.getFileName().getText())) {
             if (this->currentOpenFile.isCorrectFormat()) {
                 std::cout << CliHelperMessages::FILE_OPENED_MESSAGE << std::endl;
                 this->isFileOpen = true;
@@ -83,11 +83,12 @@ void CLI_Handler::handleOpen() {
                 std::cout << CliHelperMessages::FILE_NOT_IN_CORRECT_FORMAT << std::endl;
                 return;
             }
-
-        } else {
-            std::cout << CliHelperMessages::FILE_PATH_DOES_NOT_EXIST << std::endl;
-            return;
         }
+        std::cout << CliHelperMessages::FILE_OPENED_MESSAGE << std::endl;
+        this->isFileOpen = true;
+        this->container.readSvgElementsFromFile(this->currentOpenFile);
+        return;
+
     }
     std::cout << "There is currently open file!\nFile:" << this->currentOpenFile.getFileName() << std::endl;
 
@@ -101,18 +102,16 @@ void CLI_Handler::handleRender() {
     if (File::exists(this->path.getText())) {
         SvgFile file(this->path.getText());
         if (file.isCorrectFormat()) {
-            #ifdef WINDOWS
-               ShellExecute(NULL, "open", this->path.getText(), NULL, NULL, SW_SHOWNORMAL);
-            #endif
+#ifdef WINDOWS
+            ShellExecute(NULL, "open", this->path.getText(), NULL, NULL, SW_SHOWNORMAL);
+#endif
 
             return;
         }
         std::cerr << CliHelperMessages::FILE_NOT_IN_CORRECT_FORMAT << std::endl;
         return;
-    }
-    else
-    {
-        std::cerr<<CliHelperMessages::FILE_PATH_DOES_NOT_EXIST<<std::endl;
+    } else {
+        std::cerr << CliHelperMessages::FILE_PATH_DOES_NOT_EXIST << std::endl;
     }
 }
 
@@ -150,9 +149,8 @@ void CLI_Handler::handleSaveAs() {
         }
         if (!SvgFile::exists(this->path.getText())) {
             SvgFile file(this->path.getText());
-            if(!file.hasCorrectExtension())
-            {
-                std::cerr<<CliHelperMessages::FILE_NOT_IN_CORRECT_FORMAT<<std::endl;
+            if (!file.hasCorrectExtension()) {
+                std::cerr << CliHelperMessages::FILE_NOT_IN_CORRECT_FORMAT << std::endl;
                 return;
             }
             std::ofstream out;

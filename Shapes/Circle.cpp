@@ -19,11 +19,11 @@ void Circle::read(SvgElement & element) {
     int count = element.getAttrCount();
     for (int i = 0; i < count ; ++i) {
         if(attributes[i].key.contains("cx"))
-            this->cx = attrValueToDouble(attributes[i].value);
+            this->cx = (int) attrValueToDouble(attributes[i].value);
         else if(attributes[i].key.contains("cy"))
-            this->cy = attrValueToDouble(attributes[i].value);
+            this->cy = (int) attrValueToDouble(attributes[i].value);
         else if(attributes[i].key.contains("r"))
-            this->r = attrValueToDouble(attributes[i].value);
+            this->r = (int) attrValueToDouble(attributes[i].value);
         else if(attributes[i].key.contains("fill"))
             this->fill = attributes[i].value;
     }
